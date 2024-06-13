@@ -19,55 +19,67 @@
 		}
 	</style>
 </head>
-<body class="p-3" data-bs-theme="dark">
-	<h1>Arbitration Schedule</h1>
-	<p>
-		The next <select id="select-days">
-			<option value="1">24 hours</option>
-			<option value="7">7 days</option>
-			<option value="30" selected>30 days</option>
-			<option value="90">90 days</option>
-			<option value="365">12 months</option>
-			<option value="9999999999">eon</option>
-		</select> of arbitrations, in <select id="select-tz">
-			<option id="local-time-option" value="local">local time</option>
-			<option value="zulu">universal time (UTC+0)</option>
-		</select>, using <select id="select-hourfmt">
-			<option value="mil">military time</option>
-			<option value="24">24-hour time</option>
-			<option value="12">12-hour time</option>
-		</select>.
-	</p>
-	<div class="row">
-		<div id="log" class="col-xl-6 mb-3">
-			<p>Loading, please wait...</p>
+<body data-bs-theme="dark">
+	<nav class="navbar navbar-expand bg-body-tertiary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#" onclick="event.preventDefault();">omni.wf</a>
+			<div class="collapse navbar-collapse">
+				<div class="navbar-nav">
+					<a class="nav-link active" aria-current="page" href="#" onclick="event.preventDefault();">Arbitration Schedule</a>
+					<a class="nav-link" href="/rivencalc">Riven Calculator</a>
+				</div>
+			</div>
 		</div>
-		<div class="col-xl-6">
-			<table class="table">
-				<thead>
-					<td></td>
-					<th colspan="2">Next Occurrence</th>
-				</thead>
-				<tbody>
-					<tr id="next-type-2"><th><input id="filter-type-2" type="checkbox" checked /> <label for="filter-type-2">Survival</label></th><td></td><td></td></tr>
-					<tr id="next-type-8"><th><input id="filter-type-8" type="checkbox" checked /> <label for="filter-type-8">Defense</label></th><td></td><td></td></tr>
-					<tr id="next-type-13"><th><input id="filter-type-13" type="checkbox" checked /> <label for="filter-type-13">Interception</label></th><td></td><td></td></tr>
-					<tr id="next-type-17"><th><input id="filter-type-17" type="checkbox" checked /> <label for="filter-type-17">Excavation</label></th><td></td><td></td></tr>
-					<tr id="next-type-21"><th><input id="filter-type-21" type="checkbox" checked /> <label for="filter-type-21">Infested Salvage</label></th><td></td><td></td></tr>
-					<tr id="next-type-27"><th><input id="filter-type-27" type="checkbox" checked /> <label for="filter-type-27">Defection</label></th><td></td><td></td></tr>
-					<tr id="next-type-33"><th><input id="filter-type-33" type="checkbox" checked /> <label for="filter-type-33">Disruption</label></th><td></td><td></td></tr>
-					<tr id="next-tier-S"><th><input id="filter-tier-S" type="checkbox" checked /> <label for="filter-tier-S">S Tier</label></th><td></td><td></td></tr>
-					<tr id="next-tier-A"><th><input id="filter-tier-A" type="checkbox" checked /> <label for="filter-tier-A">A Tier</label></th><td></td><td></td></tr>
-					<tr id="next-tier-B"><th><input id="filter-tier-B" type="checkbox" checked /> <label for="filter-tier-B">B Tier</label></th><td></td><td></td></tr>
-					<tr id="next-tier-C"><th><input id="filter-tier-C" type="checkbox" checked /> <label for="filter-tier-C">C Tier</label></th><td></td><td></td></tr>
-					<tr id="next-tier-D"><th><input id="filter-tier-D" type="checkbox" checked /> <label for="filter-tier-D">D Tier</label></th><td></td><td></td></tr>
-					<tr id="next-tier-F"><th><input id="filter-tier-F" type="checkbox" checked /> <label for="filter-tier-F">F Tier</label></th><td></td><td></td></tr>
-					<tr id="next-fc-0"><th><input id="filter-fc-0" type="checkbox" checked /> <label for="filter-fc-0">Grineer</label></th><td></td><td></td></tr>
-					<tr id="next-fc-1"><th><input id="filter-fc-1" type="checkbox" checked /> <label for="filter-fc-1">Corpus</label></th><td></td><td></td></tr>
-					<tr id="next-fc-2"><th><input id="filter-fc-2" type="checkbox" checked /> <label for="filter-fc-2">Infested</label></th><td></td><td></td></tr>
-					<tr id="next-fc-3"><th><input id="filter-fc-3" type="checkbox" checked /> <label for="filter-fc-3">Corrupted</label></th><td></td><td></td></tr>
-				</tbody>
-			</table>
+	</nav>
+	<div class="p-3">
+		<p>
+			The next <select id="select-days">
+				<option value="1">24 hours</option>
+				<option value="7">7 days</option>
+				<option value="30" selected>30 days</option>
+				<option value="90">90 days</option>
+				<option value="365">12 months</option>
+				<option value="9999999999">eon</option>
+			</select> of arbitrations, in <select id="select-tz">
+				<option id="local-time-option" value="local">local time</option>
+				<option value="zulu">universal time (UTC+0)</option>
+			</select>, using <select id="select-hourfmt">
+				<option value="mil">military time</option>
+				<option value="24">24-hour time</option>
+				<option value="12">12-hour time</option>
+			</select>.
+		</p>
+		<div class="row">
+			<div id="log" class="col-xl-6 mb-3">
+				<p>Loading, please wait...</p>
+			</div>
+			<div class="col-xl-6">
+				<table class="table">
+					<thead>
+						<td></td>
+						<th colspan="2">Next Occurrence</th>
+					</thead>
+					<tbody>
+						<tr id="next-type-2"><th><input id="filter-type-2" type="checkbox" checked /> <label for="filter-type-2">Survival</label></th><td></td><td></td></tr>
+						<tr id="next-type-8"><th><input id="filter-type-8" type="checkbox" checked /> <label for="filter-type-8">Defense</label></th><td></td><td></td></tr>
+						<tr id="next-type-13"><th><input id="filter-type-13" type="checkbox" checked /> <label for="filter-type-13">Interception</label></th><td></td><td></td></tr>
+						<tr id="next-type-17"><th><input id="filter-type-17" type="checkbox" checked /> <label for="filter-type-17">Excavation</label></th><td></td><td></td></tr>
+						<tr id="next-type-21"><th><input id="filter-type-21" type="checkbox" checked /> <label for="filter-type-21">Infested Salvage</label></th><td></td><td></td></tr>
+						<tr id="next-type-27"><th><input id="filter-type-27" type="checkbox" checked /> <label for="filter-type-27">Defection</label></th><td></td><td></td></tr>
+						<tr id="next-type-33"><th><input id="filter-type-33" type="checkbox" checked /> <label for="filter-type-33">Disruption</label></th><td></td><td></td></tr>
+						<tr id="next-tier-S"><th><input id="filter-tier-S" type="checkbox" checked /> <label for="filter-tier-S">S Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-A"><th><input id="filter-tier-A" type="checkbox" checked /> <label for="filter-tier-A">A Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-B"><th><input id="filter-tier-B" type="checkbox" checked /> <label for="filter-tier-B">B Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-C"><th><input id="filter-tier-C" type="checkbox" checked /> <label for="filter-tier-C">C Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-D"><th><input id="filter-tier-D" type="checkbox" checked /> <label for="filter-tier-D">D Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-F"><th><input id="filter-tier-F" type="checkbox" checked /> <label for="filter-tier-F">F Tier</label></th><td></td><td></td></tr>
+						<tr id="next-fc-0"><th><input id="filter-fc-0" type="checkbox" checked /> <label for="filter-fc-0">Grineer</label></th><td></td><td></td></tr>
+						<tr id="next-fc-1"><th><input id="filter-fc-1" type="checkbox" checked /> <label for="filter-fc-1">Corpus</label></th><td></td><td></td></tr>
+						<tr id="next-fc-2"><th><input id="filter-fc-2" type="checkbox" checked /> <label for="filter-fc-2">Infested</label></th><td></td><td></td></tr>
+						<tr id="next-fc-3"><th><input id="filter-fc-3" type="checkbox" checked /> <label for="filter-fc-3">Corrupted</label></th><td></td><td></td></tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<script>
