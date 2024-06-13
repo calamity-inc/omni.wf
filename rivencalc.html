@@ -9,6 +9,7 @@
 <body data-bs-theme="dark">
 	<div class="container p-3">
 		<h1>Riven Calculator</h1>
+		<p>Every stat (buff and curse) on your Riven has a random multiplier between 0.9x and 1.1x (or -10% to +10%). This tool helps you see the impact on the final numbers.</p>
 		<div class="row mt-3">
 			<div class="col-md-6">
 				<div class="card mb-3">
@@ -278,10 +279,31 @@
 				{
 					let min = getBuffValue(rivenType, upgrade.tag, 0, omegaAttenuation, lvl, buffs, curses);
 					let max = getBuffValue(rivenType, upgrade.tag, 1, omegaAttenuation, lvl, buffs, curses);
-					let span = document.createElement("span");
-					span.className = "d-block";
-					span.innerHTML = dict_en[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>");
-					document.getElementById("buffs-body").appendChild(span);
+					let div = document.createElement("div");
+					{
+						let span = document.createElement("span");
+						span.innerHTML = dict_en[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
+						div.appendChild(span);
+					}
+					{
+						let a = document.createElement("a");
+						a.style.textDecoration = "none";
+						a.href = "#";
+						a.onclick = function(event)
+						{
+							event.preventDefault();
+							let displayValue = prompt("Input the number your Riven has for this stat (e.g. 42.5):");
+							if (displayValue)
+							{
+								const f = RivenParser.unparseBuff(rivenType, omegaAttenuation, lvl, buffs, curses, upgrade.tag, RivenParser.displayValueToValue(upgrade.tag, displayValue));
+								this.textContent = "▲ " + displayValue + " ≈ " + RivenParser.lerp(0.9, 1.1, f).toFixed(2) + "x = " + RivenParser.floatToGrade(f);
+							}
+						};
+						a.textContent = "▲";
+						a.title = "Grading";
+						div.appendChild(a);
+					}
+					document.getElementById("buffs-body").appendChild(div);
 				}
 				if (upgrade.tag != "WeaponMeleeComboBonusOnHitMod") // Can be curse?
 				{
@@ -292,10 +314,35 @@
 						min.displayValue *= -1;
 						max.displayValue *= -1;
 					}
-					let span = document.createElement("span");
-					span.className = "d-block";
-					span.innerHTML = dict_en[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>");
-					document.getElementById("curses-body").appendChild(span);
+					let div = document.createElement("div");
+					{
+						let span = document.createElement("span");
+						span.innerHTML = dict_en[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
+						div.appendChild(span);
+					}
+					{
+						let a = document.createElement("a");
+						a.style.textDecoration = "none";
+						a.href = "#";
+						a.onclick = function(event)
+						{
+							event.preventDefault();
+							let displayValue = prompt("Input the number your Riven has for this stat (e.g. -42.5):");
+							if (displayValue)
+							{
+								if (upgrade.upgradeValues[0].reverseValueSymbol)
+								{
+									displayValue *= -1;
+								}
+								const f = RivenParser.unparseCurse(rivenType, omegaAttenuation, lvl, buffs, curses, upgrade.tag, RivenParser.displayValueToValue(upgrade.tag, displayValue));
+								this.textContent = "▲ " + displayValue + " ≈ " + RivenParser.lerp(0.9, 1.1, f).toFixed(2) + "x = " + RivenParser.floatToGrade(1 - f);
+							}
+						};
+						a.textContent = "▲";
+						a.title = "Grading";
+						div.appendChild(a);
+					}
+					document.getElementById("curses-body").appendChild(div);
 				}
 			});
 			if (curses == 0)
