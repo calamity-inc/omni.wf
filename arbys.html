@@ -213,7 +213,7 @@
 		Promise.all([
 			fetch("https://browse.wf/warframe-public-export-plus/dict.en.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
-			fetch("https://data.source.wf/arbys-mid2024-to-mid2027.txt").then(res => res.text())
+			fetch("https://browse.wf/arbys.txt").then(res => res.text())
 		]).then(([ dict_en, ExportRegions, arbys ]) => {
 			window.dict_en = dict_en;
 			window.ExportRegions = ExportRegions;
