@@ -179,42 +179,80 @@
 				}
 			});
 
+			const params = new URLSearchParams(location.hash.replace("#", ""));
+			if (params.has("weapon"))
+			{
+				let weapon = params.get("weapon");
+				weaponConfig = weapon;
+				if (weapon.indexOf(":") == -1)
+				{
+					document.getElementById("weapon-name").value = weapon;
+					weapon = getValue(document.getElementById("weapon-name"));
+				}
+				const [rivenType, omegaAttenuation] = weapon.split(":");
+				document.getElementById("riven-type").value = rivenType;
+				document.getElementById("omega-attenuation").value = omegaAttenuation;
+			}
+			if (params.has("lvl"))
+			{
+				document.getElementById("lvl").value = params.get("lvl");
+			}
+			if (params.has("buffs"))
+			{
+				document.getElementById("buffs").value = params.get("buffs");
+			}
+			if (params.has("curses"))
+			{
+				document.getElementById("curses").value = params.get("curses");
+			}
+
 			document.getElementById("weapon-name").onchange = function()
 			{
 				const value = getValue(this);
 				if (value)
 				{
-					//location.hash = value;
 					const [rivenType, omegaAttenuation] = value.split(":");
 					document.getElementById("riven-type").value = rivenType;
 					document.getElementById("omega-attenuation").value = omegaAttenuation;
 					calculateStats();
+
+					weaponConfig = this.value;
+					saveSettings();
 				}
 			};
 
 			document.getElementById("riven-type").onchange = function()
 			{
 				calculateStats();
+
+				weaponConfig = document.getElementById("riven-type").value + ":" + document.getElementById("omega-attenuation").value;
+				saveSettings();
 			};
 
 			document.getElementById("omega-attenuation").onchange = function()
 			{
 				calculateStats();
+
+				weaponConfig = document.getElementById("riven-type").value + ":" + document.getElementById("omega-attenuation").value;
+				saveSettings();
 			};
 
 			document.getElementById("lvl").onchange = function()
 			{
 				calculateStats();
+				saveSettings();
 			};
 
 			document.getElementById("buffs").onchange = function()
 			{
 				calculateStats();
+				saveSettings();
 			};
 
 			document.getElementById("curses").onchange = function()
 			{
 				calculateStats();
+				saveSettings();
 			};
 
 			calculateStats();
@@ -296,6 +334,14 @@
 				fingerprint.curses.push({ Tag: tag, Value: tagValue });
 			} while (--curses > 0);
 			return RivenParser.parseRiven(rivenType, fingerprint, omegaAttenuation).stats[fingerprint.buffs.length];
+		}
+
+		function saveSettings()
+		{
+			if ("weaponConfig" in window)
+			{
+				location.hash = "weapon=" + encodeURIComponent(window.weaponConfig) + "&lvl=" + document.getElementById("lvl").value + "&buffs=" + document.getElementById("buffs").value + "&curses=" + document.getElementById("curses").value;
+			}
 		}
 	</script>
 </body>
