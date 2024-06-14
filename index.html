@@ -22,10 +22,30 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbar-content">
-				<div class="navbar-nav">
+				<div class="navbar-nav me-auto mb-2 mb-md-0">
 					<a class="nav-link" href="/arbys">Arbitration Schedule</a>
 					<a class="nav-link" href="/rivencalc">Riven Calculator</a>
 					<a class="nav-link" href="/glyphs">Glyphs</a>
+				</div>
+				<div class="nav-item dropdown mb-2 mb-md-0">
+					<a id="lang-dropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">English</a>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><a class="dropdown-item active" href="#" data-lang="en" onclick="event.preventDefault();setLanguage('en');">English</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="de" onclick="event.preventDefault();setLanguage('de');">Deutsch</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="es" onclick="event.preventDefault();setLanguage('es');">Español</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="fr" onclick="event.preventDefault();setLanguage('fr');">Français</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="it" onclick="event.preventDefault();setLanguage('it');">Italiano</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="ja" onclick="event.preventDefault();setLanguage('ja');">日本語</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="ko" onclick="event.preventDefault();setLanguage('ko');">한국어</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="pl" onclick="event.preventDefault();setLanguage('pl');">Polski</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="pt" onclick="event.preventDefault();setLanguage('pt');">Português</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="ru" onclick="event.preventDefault();setLanguage('ru');">Русский</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="tr" onclick="event.preventDefault();setLanguage('tr');">Türkçe</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="uk" onclick="event.preventDefault();setLanguage('uk');">Українська</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="zh" onclick="event.preventDefault();setLanguage('zh');">简体中文</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="tc" onclick="event.preventDefault();setLanguage('tc');">繁體中文</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="th" onclick="event.preventDefault();setLanguage('th');">แบบไทย</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -35,6 +55,7 @@
 		<input id="query" class="form-control" autofocus />
 		<div id="results" class="mt-3"></div>
 	</div>
+	<script src="common.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
 	<script>
 		const params = new URLSearchParams(location.hash.replace("#", ""));
@@ -45,18 +66,18 @@
 		}
 
 		Promise.all([
-			fetch("https://browse.wf/warframe-public-export-plus/dict.en.json").then(res => res.json()),
+			getDictPromise(),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
-			]).then(([ dict_en, ExportWeapons, ExportFlavour, supplementalGlyphData ]) =>
+			]).then(([ dict, ExportWeapons, ExportFlavour, supplementalGlyphData ]) =>
 		{
-			window.dict_en = dict_en;
+			window.dict = dict;
 			window.ExportWeapons = ExportWeapons;
 			window.ExportFlavour = ExportFlavour;
 			window.supplementalGlyphData = supplementalGlyphData;
 
-			window.dict_en_entries = Object.entries(dict_en).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
+			window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
 
 			if (params.has("q"))
 			{
@@ -74,6 +95,17 @@
 				{
 					location.hash = "q=" + encodeURIComponent(this.value);
 					doQuery(this.value);
+				}
+			};
+
+			onLanguageUpdate = function()
+			{
+				window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
+
+				const params = new URLSearchParams(location.hash.replace("#", ""));
+				if (params.has("q"))
+				{
+					doQuery(params.get("q"));
 				}
 			};
 		});
@@ -129,7 +161,7 @@
 				{
 					const title = document.createElement("h5");
 					title.className = "card-title";
-					title.textContent = dict_en[result.value.name] + " ";
+					title.textContent = dict[result.value.name] + " ";
 					{
 						const a = document.createElement("a");
 						a.textContent = "📖";
@@ -155,7 +187,7 @@
 				{
 					let p = document.createElement("p");
 					p.className = "card-text";
-					p.textContent = dict_en[result.value.description] + " ";
+					p.textContent = dict[result.value.description] + " ";
 					{
 						const a = document.createElement("a");
 						a.textContent = "📖";
@@ -359,7 +391,7 @@
 		function getDictEntriesFromQuery(query) {
 			let num_results = 0;
 			query = query.toLowerCase();
-			return dict_en_entries.filter(([key, value]) =>
+			return dict_entries.filter(([key, value]) =>
 			{
 				value = value.toLowerCase();
 				return value == query
