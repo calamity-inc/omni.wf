@@ -1,0 +1,276 @@
+local wiki_data = {
+	-- promo code, creator name
+	{ "6ixGatsu", "6ixGatsu" },
+	{ "AdmiralBahroo", "AdmiralBahroo" },
+	{ "AeonKnight86", "AeonKnight86" },
+	{ "AGayGuyPlays", "Aggp" }, -- corrected
+	{ "Akari", "Akari_ayataka" },
+	{ "AlainLoveGlyph", "AlainLoveGlyph" },
+	{ "AlexanderDario", "AlexanderDario" },
+	{ "Amprov", "Goku707" },
+	{ "AngryUnicorn", "AngryUnicorn" },
+	{ "AnJetCat", "AnJetCat" },
+	{ "AnnoyingKillah", "AnnoyingKillah" },
+	{ "ArgonSix", "ArgonSix" },
+	{ "AshisogiTenno", "AshisogiTenno" },
+	{ "AsuraTenshi", "AsuraTenshi" },
+	{ "AuntieTan", "AuntieTan" },
+	{ "Avelna", "Avelna" },
+	{ "Aznitrous", "Aznitrous" },
+	{ "BigJimID", "BigJimID" },
+	{ "BlackOni", "BlackOni" },
+	{ "BlazingCobalt", "BlazingCobalt" },
+	{ "BlueberryCat", "BlueberryCat" },
+	{ "Bricky", "Bricky" },
+	{ "BrotherDaz", "OldDirtyDaz" }, -- corrected
+	{ "Brozime", "Brozime" },
+	{ "BUFF00N", "BUFF00N" },
+	{ "BurnBxx", "BurnBxx" },
+	{ "Bwana", "Bwana" },
+	{ "CanOfCraig", "CanOfCraig" },
+	{ "CalamityDeath", "CalamityDeath" },
+	{ "CaleyEmerald", "CaleyEmerald" },
+	{ "Carchara", "Carchara" },
+	{ "Casardis", "Casardis" },
+	{ "CephalonSquared", "CephalonSquared" },
+	{ "ChacyTay", "ChacyTay" },
+	{ "Char", "Char" },
+	{ "Chelestra", "Chelestra" },
+	{ "Cleonaturin", "Cleonaturin" },
+	{ "Codoma", "Codoma" },
+	{ "CohhCarnage", "CohhCarnage" },
+	{ "ColdScar", "ColdScar" },
+	{ "ColdTiger", "ColdTiger" },
+	{ "ConfusedWarframe", "ConfusedWarframe" },
+	{ "CopyKavat", "CopyKavat" },
+	{ "Cpt_KimGlyph", "Cpt_KimGlyph" },
+	{ "Crowdi", "Crowdi" },
+	{ "DAIDAIKIRI", "DAIDAIKIRI" },
+	{ "DanieltheDemon", "DanieltheDemon" },
+	{ "Danily", "Danily" },
+	{ "DasterCreations", "DasterCreations" },
+	{ "DatLoon", "DatLoon" },
+	{ "DayJoBo", "DayJoBo" },
+	{ "DebbySheen", "DebbySheen" },
+	{ "DeejayKnight", "DeejayKnight" },
+	{ "DeepBlueBeard", "DeepBlueBeard" },
+	{ "Destrohido", "Destrohido" },
+	{ "DeuceTheGamer", "DeuceTheGamer" },
+	{ "DillyFrame", "DillyFrame" },
+	{ "DimitriV2", "DimitriV2" },
+	{ "Disfusional", "Disfusional" },
+	{ "DjTechLive", "DjTechLive" },
+	{ "DKDiamantes", "DKDiamantes" },
+	{ "DNexus", "DNexus" },
+	{ "EdRick", "EdRick" },
+	{ "Eduiy16", "Eduiy16" },
+	{ "ElDanker", "D4NK3R" },
+	{ "ElGrineerExiliado", "ElGrineerExiliado" },
+	{ "EliceGameplay", "EliceGameplay" },
+	{ "Elnoraeleo", "Elnoraeleo" },
+	{ "Emovj", "Emovj" },
+	{ "EmpyreanCap", "EmpyreanCap" },
+	{ "Endotti_", "Endotti_" },
+	{ "Eterion", "Eterion" },
+	{ "ExtraCredits", "ExtraCredits" },
+	{ "FacelessBeanie", "FacelessBeanie" },
+	{ "Fated2Perish", "FatedsChronicles" }, -- corrected
+	{ "FashionFrameIsEndGame", "FashionFrameIsEndGame" },
+	{ "FeelLikeAPlayer", "FeelLikeAPlayer" },
+	{ "FerreusDemon", "FerreusDemon" },
+	{ "FR4G-TP", "FR4G-TP" },
+	{ "FloofyDwagon", "FloofyDwagon" },
+	{ "Finlaena", "Finlaena" },
+	{ "FrostyNovaPrime", "FrostyNovaPrime" },
+	{ "Frozenbawz", "Frozenbawz" },
+	{ "Gara", "Gara" },
+	{ "Gingy", "Gingy" },
+	{ "GlamShatterskull", "GlamShatterskull" },
+	{ "GrindHardSquad", "GrindHardSquad" },
+	{ "H3dsh0t", "H3dsh0t" },
+	{ "HappinessDark", "HappinessDark" },
+	{ "Homiinvocado", "Homiinvocado" },
+	{ "HotsHomStories", "HotsHomStories" },
+	{ "Hydroxate", "Hydroxate" },
+	{ "iFlynn", "iFlynn" },
+	--{ "IISlip", "IISlip" }, -- this one may no longer exist
+	{ "Ikedo", "Ikedo" },
+	{ "Im7heClown", "Im7heClown" },
+	{ "InfernoTheFireLord", "InfernoTheFireLord" },
+	{ "Infodiversao", "Infodiversao" },
+	{ "ItsJustToe", "ItsJustToe" },
+	{ "Iwoply", "Iwoply" },
+	{ "JamieVoiceOver", "JamieVoiceOver" },
+	{ "JessiThrower", "JessiThrower" },
+	{ "JoeyZero", "JoeyZero" },
+	{ "Joriale", "Joriale" },
+	{ "JustRLC", "RLCGaming" },
+	{ "K1llerBarbie", "K1llerBarbie" },
+	{ "KavatsSchroedinger", "KavatsSchroedinger" },
+	{ "KenshinWF", "KenshinWF" },
+	{ "KingGothalion", "KingGothalion" },
+	{ "Kirarahime", "Kirarahime" },
+	{ "Kiwad", "Kiwad" },
+	{ "Kr1ptonPlayer", "Kr1ptonPlayer" },
+	{ "Kretduy", "Kretduy" },
+	{ "L1feWater", "L1feWater" },
+	{ "LadyNovita", "LadyNovita" },
+	{ "LadyTheLaddy", "LadyTheLaddy" },
+	{ "LeoDoodling", "LeoDoodling" },
+	{ "LeyzarGamingViews", "LeyzarGamingViews" },
+	{ "LightMicke", "Light_micke" },
+	{ "LilLexi", "LilLexi" },
+	{ "LucianPlaysAllDay", "LucianPlaysAllDay" },
+	{ "LynxAria", "LynxAria" },
+	{ "Macho", "Macho" },
+	{ "MadFury", "MadFury" },
+	{ "Makarimorph", "Makarimorph" },
+	{ "MaoMix", "MaoMix" },
+	{ "MCGamerCZ", "MCGamerCZ" },
+	{ "MCMonkeys", "MCMonkeys" },
+	{ "MeCore", "MeCore" },
+	{ "MedusaCaptures", "MedusaCaptures" },
+	{ "MHBlacky", "MHBlacky" },
+	{ "MichelPostma", "MichelPostma" },
+	{ "MikeTheBard", "MikeTheBard" },
+	{ "MissFwuffy", "MissFwuffy" },
+	{ "MisterGamer", "MisterGamer" },
+	{ "MjikThize", "MjikThize" },
+	{ "Mogamu", "Mogamu" },
+	{ "MrRoadBlock", "MrRoadBlock" },
+	{ "MrSteelWar", "MrSteelWar" },
+	{ "MrWarframeGuy", "MrWarframeGuy" },
+	{ "N00blShowtek", "N00blShowtek" },
+	{ "Nomnom", "Nononom12" },
+	{ "NoSympathyy", "NoSympathyy" },
+	{ "Np161", "Np161" },
+	{ "OddieOwl", "OddieOwl" },
+	{ "OOSIJ", "OOSIJ" },
+	{ "OriginalWickedfun", "OriginalWickedfun" },
+	{ "OrpheusDeluxe", "OrpheusDeluxe" },
+	{ "Ozku", "Ozku" },
+	{ "PammyJammy", "PammyJammy" },
+	{ "Pandaahh", "Pandaahh" },
+	{ "PapaTLion", "PapaTLion" },
+	{ "PlagueDirector", "PlagueDirector" },
+	{ "PokketNinja", "PokketNinja" },
+	{ "PostiTV", "PostiTV" },
+	{ "PrimedAverage", "PrimedAverage" },
+	{ "ProfessorBroman", "ProfessorBroman" },
+	{ "Purkinje", "Purkinje" },
+	{ "PurpleFlurp", "PurpleFlurp" },
+	{ "Pyrah", "Pyrah" },
+	{ "PyrrhicSerenity", "PyrrhicSerenity" },
+	{ "RagingTerror", "RagingTerror" },
+	{ "Rahetalius", "Rahetalius" },
+	{ "Rahny", "Rahny" },
+	{ "RainbowWaffles", "RainbowWaffles" },
+	{ "RelentlessZen", "RelentlessZen" },
+	{ "ReyGanso", "ReyGanso" },
+	{ "Rippz0r", "Rippz0r" },
+	{ "Ritens", "Ritens" },
+	{ "RoyalPrat", "RoyalPrat" },
+	{ "RustyFin", "RustyFin" },
+	{ "Sapmatic", "Sapmatic" },
+	{ "SarahTsang", "SarahTsang" },
+	{ "Scallion", "Scallion" },
+	{ "Searyn", "Searyn" },
+	{ "ScarletMoon", "ScarletMoon" },
+	{ "SerdarSari", "SerdarSari" },
+	{ "Sharlazard", "Sharlazard" },
+	{ "ShenZhao", "ShenZhao" },
+	{ "Sherpa", "Sherpa" },
+	{ "Shul", "Shul" },
+	{ "SiejoUmbra", "SiejoUmbra" },
+	{ "SillFix", "SillFix" },
+	{ "SkillUp", "SkillUp" },
+	{ "SilentMashiko", "SilentMashiko" },
+	{ "Smoodie", "Smoodie" },
+	{ "Sn0wRC", "Sn0wRC" },
+	{ "SpaceWaifu", "SpaceWaifu" },
+	{ "Spandy", "Spandy" },
+	{ "Strippin", "Strippin" },
+	{ "StudioCyen", "StudioCyen" },
+	{ "Str8opticroyal", "Str8opticroyal" },
+	{ "TacticalPotato", "TacticalPotato" },
+	{ "Tanchan", "Tanchan" },
+	{ "TBGKaru", "TBGKaru" },
+	{ "Teawrex", "Teawrex" },
+	{ "TheGamio", "TheGamio" },
+	{ "TheKengineer", "Kengineer" }, -- corrected
+	{ "ThePanda", "ThepandaN8" }, -- corrected
+	{ "TinBears", "TinBears" },
+	{ "TioMario", "TioMario" },
+	{ "TioRamon", "TioRamon" },
+	{ "TotalN3wb", "TotalN3wb" },
+	{ "Tortoise", "Wd_tortoise" },
+	{ "TrashFrame", "TrashFrame" },
+	{ "Triburos", "Triburos" },
+	{ "Twila", "Twila" },
+	{ "UnrealYuki", "UnrealYuki" },
+	{ "UreiFen", "UreiFen" },
+	{ "VAMP6X6X6X", "Warframe Madness" },
+	{ "Vamppire", "Vamppy" }, -- corrected
+	{ "Varlinator", "Varlinator" },
+	{ "VashCowaii", "VashCowaii" },
+	{ "Vernoc", "Vernoc" },
+	{ "VoidFissureBR", "VoidFissureBR" },
+	{ "Voli", "Voli" },
+	{ "VoltTheHero", "VoltTheHero" },
+	{ "VVhiteAngel", "VVhiteAngel" },
+	{ "WalterDV", "WalterDV" },
+	{ "Wanderbots", "Wanderbots" },
+	{ "WealWest", "WealWest" },
+	{ "WideScreenJohn", "WideScreenJohn" },
+	{ "Woxli", "Woxli" },
+	{ "Xenogelion", "Xenogelion" },
+	{ "xBocchanVTx", "Bocchan_vt" },
+	{ "XxVampixx", "XxVampixx" },
+	{ "YourLuckyClover", "YourLuckyClover" },
+	{ "Zarionis", "Zarionis" },
+	{ "Zxpfer", "Zxpfer" },
+}
+
+
+local { json } = require "*"
+
+local ExportFlavour = io.contents("../../warframe-public-export-plus/ExportFlavour.json") |> json.decode
+local dict_en = io.contents("../../warframe-public-export-plus/dict.en.json") |> json.decode
+
+local glyphs_data = { __order = {} }
+
+for itemUniqueName, item in ExportFlavour do
+	if item.base == "/Lotus/Types/Items/AvatarImageItem" then
+		local glyph_name = dict_en[item.name]:lower():split(" "):concat(""):split("'"):concat(""):split("_"):concat("")
+		local arr = wiki_data:find(function(arr)
+			if glyph_name:contains(arr[2]:lower():split(" "):concat(""):split("_"):concat("")) then
+				if arr[2] == "Bricky" and itemUniqueName ~= "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageBricky" then
+					return false
+				end
+				if arr[2] == "Gara" and itemUniqueName ~= "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageGara" then
+					return false
+				end
+				if arr[3] then
+					error("Multiple glyphs match "..arr[2])
+				end
+				arr[3] = true
+				return true
+			end
+			return false
+		end)
+		if arr then
+			glyphs_data.__order:insert(itemUniqueName)
+			glyphs_data[itemUniqueName] = { promo_code = arr[1] }
+		end
+	end
+end
+
+for wiki_data as arr do
+	if not arr[3] then
+		print("Count not match creator glyph for "..arr[2])
+	end
+end
+
+glyphs_data.__order:sort()
+
+io.contents("glyphs.json", json.encode(glyphs_data, true))
