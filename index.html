@@ -67,12 +67,14 @@
 
 		Promise.all([
 			getDictPromise(),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
-			]).then(([ dict, ExportWeapons, ExportFlavour, supplementalGlyphData ]) =>
+			]).then(([ dict, ExportWarframes, ExportWeapons, ExportFlavour, supplementalGlyphData ]) =>
 		{
 			window.dict = dict;
+			window.ExportWarframes = ExportWarframes;
 			window.ExportWeapons = ExportWeapons;
 			window.ExportFlavour = ExportFlavour;
 			window.supplementalGlyphData = supplementalGlyphData;
@@ -215,6 +217,15 @@
 						p.appendChild(a);
 					}
 					root.appendChild(p);
+				}
+				else if (result.type == "warframe")
+				{
+					let a = document.createElement("a");
+					a.className = "card-link";
+					a.href = "https://browse.wf" + result.key;
+					a.target = "_blank";
+					a.textContent = "View raw data.";
+					root.appendChild(a);
 				}
 				else if (result.type == "weapon")
 				{
@@ -412,14 +423,19 @@
 			{
 				if (result.type == "tag")
 				{
-					// TODO: Resolve powersuits
-					let entry = Object.entries(ExportWeapons).find(([uniqueName, item]) => item.name == result.key && item.totalDamage != 0);
+					let entry = Object.entries(ExportWarframes).find(([uniqueName, item]) => item.name == result.key);
+					if (entry)
+					{
+						res.push({ type: "warframe", key: entry[0], value: entry[1] });
+						continue;
+					}
+					entry = Object.entries(ExportWeapons).find(([uniqueName, item]) => item.name == result.key && item.totalDamage != 0);
 					if (entry)
 					{
 						res.push({ type: "weapon", key: entry[0], value: entry[1] });
 						continue;
 					}
-					entry = Object.entries(ExportFlavour).find(([uniqueName, item]) => item.name == result.key && item.totalDamage != 0);
+					entry = Object.entries(ExportFlavour).find(([uniqueName, item]) => item.name == result.key);
 					if (entry)
 					{
 						res.push({ type: "flavour", key: entry[0], value: entry[1] });
