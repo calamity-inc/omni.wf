@@ -282,11 +282,13 @@
 					{
 						rivenType = "LotusPistolRandomModRare";
 					}
-					else if (weapon.productCategory == "Melee")
+					else if (weapon.productCategory == "Melee"
+						|| weapon.holsterCategory == "MELEE" // to handle melees in the "SentinelWeapons" product category
+						)
 					{
 						rivenType = "PlayerMeleeWeaponRandomModRare";
 					}
-					else if (weapon.holsterType == "SHOTGUN")
+					else if (weapon.holsterCategory == "SHOTGUN")
 					{
 						rivenType = "LotusShotgunRandomModRare";
 					}
