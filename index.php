@@ -46,6 +46,7 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
 			]).then(([
 				dict,
@@ -57,6 +58,7 @@
 				ExportCustoms,
 				ExportRewards,
 				ExportRegions,
+				ExportEnemies,
 				supplementalGlyphData
 			]) =>
 		{
@@ -70,6 +72,7 @@
 			window.ExportCustoms_entries = Object.entries(ExportCustoms);
 			window.ExportRewards_entries = Object.entries(ExportRewards);
 			window.ExportRegions = ExportRegions;
+			window.ExportEnemies = ExportEnemies;
 			window.supplementalGlyphData = supplementalGlyphData;
 
 			updateMissionDeckNames();
@@ -117,6 +120,13 @@
 				region.rewardManifests.forEach(deckName => {
 					window.missionDeckNames[deckName] = dict[region.name] + " (" + dict[region.systemName] + ")";
 				});
+			});
+
+			window.droptableNames = {};
+			Object.values(ExportEnemies.avatars).forEach(avatar => {
+				if (avatar.droptable) {
+					window.droptableNames[avatar.droptable] = dict[avatar.name];
+				}
 			});
 		}
 
@@ -462,7 +472,7 @@
 									if (deckName in missionDeckNames)
 									{
 										sources.push({
-											deckName: missionDeckNames[deckName] ?? deckName,
+											name: missionDeckNames[deckName] ?? deckName,
 											rotation: i,
 											itemCount: reward.itemCount,
 											probability: reward.probability
@@ -476,6 +486,22 @@
 							}
 						}
 					});
+					Object.entries(ExportEnemies.droptables).forEach(([droptableName, pools]) => {
+						for (const pool of pools)
+						{
+							for (const reward of pool.items)
+							{
+								if (reward.type == result.key)
+								{
+									sources.push({
+										name: droptableNames[droptableName] ?? droptableName,
+										itemCount: 1,
+										probability: reward.probability * pool.chance
+									});
+								}
+							}
+						}
+					});
 					if (sources.length != 0)
 					{
 						sources.sort((a, b) => (b.itemCount * b.probability) - (a.itemCount * a.probability));
@@ -483,7 +509,12 @@
 						let ul = document.createElement("ul");
 						sources.forEach(source => {
 							let li = document.createElement("li");
-							li.textContent = source.deckName + ", Rotation " + "ABCD"[source.rotation] + " gives " + source.itemCount + " @ " + (source.probability * 100).toFixed(2) + "%";
+							li.textContent = source.name;
+							if (source.rotation)
+							{
+								li.textContent += ", Rotation " + ("ABCD"[source.rotation]);
+							}
+							li.textContent += " gives " + source.itemCount + " @ " + (source.probability * 100).toFixed(2) + "%";
 							ul.appendChild(li);
 						});
 						root.appendChild(ul);
