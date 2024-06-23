@@ -67,8 +67,9 @@
 				<label for="filter" class="form-label">Filter</label>
 				<select class="form-control" id="filter">
 					<option value="0">All Glyphs</option>
-					<option value="1">Universal Promo Code</option>
-					<option value="2">Some Effort Required</option>
+					<option value="1">Creator Glyphs</option>
+					<option value="2">Universal Promo Code</option>
+					<option value="3">Some Effort Required</option>
 				</select>
 			</div>
 			<div class="col-6">
@@ -117,8 +118,9 @@
 				return item.base == "/Lotus/Types/Items/AvatarImageItem"
 				&& !(item.icon in exclude)
 				&& (item.icon != "/Lotus/Interface/Icons/Player/LotusSymbol.png" || uniqueName == "/Lotus/Types/StoreItems/AvatarImages/AvatarImageDefault")
-				&& (filter != 1 || supplementalGlyphData[uniqueName]?.promo_code)
-				&& (filter != 2 || (
+				&& (filter != 1 || uniqueName.substr(0, 48) == "/Lotus/Types/StoreItems/AvatarImages/FanChannel/")
+				&& (filter != 2 || supplementalGlyphData[uniqueName]?.promo_code)
+				&& (filter != 3 || (
 						uniqueName in supplementalGlyphData
 						&& !supplementalGlyphData[uniqueName].promo_code
 						&& (
