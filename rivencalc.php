@@ -391,52 +391,64 @@
 
 		function addStatCompatInfo(div, weaponData, tag, buff)
 		{
-			let incompatible = false;
-			if (tag == "WeaponProjectileSpeedMod"
-				&& weaponData?.compatibilityTags
-				&& !weaponData.compatibilityTags.find(x => x == "PROJECTILE")
-				)
+			if (weaponData)
 			{
-				incompatible = true;
-			}
-			if (tag in upgradeTagToDamageType)
-			{
-				const damageType = upgradeTagToDamageType[tag];
-				if (!weaponHasInnateDamage(weaponData, damageType))
+				let incompatible = false;
+				if (tag == "WeaponProjectileSpeedMod"
+					&& weaponData.compatibilityTags
+					&& !weaponData.compatibilityTags.find(x => x == "PROJECTILE")
+					)
 				{
-					const isPhysical = (damageType == "DT_IMPACT" || damageType == "DT_PUNCTURE" || damageType == "DT_SLASH");
-					if (isPhysical || !buff)
+					incompatible = true;
+				}
+				if (tag in upgradeTagToDamageType)
+				{
+					const damageType = upgradeTagToDamageType[tag];
+					if (!weaponCanRollDamageType(weaponData, damageType))
 					{
-						incompatible = true;
+						const isPhysical = (damageType == "DT_IMPACT" || damageType == "DT_PUNCTURE" || damageType == "DT_SLASH");
+						if (isPhysical || !buff)
+						{
+							incompatible = true;
+						}
 					}
 				}
-			}
-			if (incompatible)
-			{
-				let span = document.createElement("span");
-				span.textContent = "ⓘ";
-				span.className = "text-body-emphasis";
-				span.title = "This stat can currently not be rolled on the selected weapon.";
-				div.appendChild(span);
+				if (incompatible)
+				{
+					let span = document.createElement("span");
+					span.textContent = "ⓘ";
+					span.className = "text-body-emphasis";
+					span.title = "This stat can currently not be rolled on the selected weapon.";
+					div.appendChild(span);
 
-				span = document.createElement("span");
-				span.textContent = " ";
-				div.appendChild(span);
+					span = document.createElement("span");
+					span.textContent = " ";
+					div.appendChild(span);
+				}
 			}
 		}
 
-		function weaponHasInnateDamage(weaponData, damageType)
+		// Test vectors for rollable physicals
+
+		// Weapons with projectile:
+		// - Aeolak: Impact, Puncture, Slash.
+		// - Acceltra: Impact.
+		// - Hystrix: Puncture.
+		// Weapons without projectile:
+		// - Braton: Impact, Puncture, Slash.
+		// - Bronco: Impact.
+		// - Lex: Puncture.
+
+		function weaponCanRollDamageType(weaponData, damageType)
 		{
-			if (weaponData
-				&& weaponData.behaviors
-				&& weaponData.behaviors[0]
-				&& weaponData.behaviors[0].projectile
-				&& weaponData.behaviors[0].projectile.attack
-				)
+			const behavior = weaponData.behaviors[0];
+			const damageTable = behavior.projectile?.attack ? behavior.projectile.attack : behavior.impact;
+			if (damageType in damageTable)
 			{
-				return (damageType in weaponData.behaviors[0].projectile.attack);
+				const totalDamage = Object.values(damageTable).reduce((a, b) => a + b, 0);
+				return (damageTable[damageType] / totalDamage) > 0.15;
 			}
-			return true;
+			return false;
 		}
 
 		function getBuffValue(rivenType, tag, tagValue, omegaAttenuation, lvl, buffs, curses)
