@@ -422,16 +422,6 @@
 			"WeaponToxinDamageMod": "DT_POISON",
 		}
 
-		// Test vectors for rollable physicals
-
-		// Weapons with projectile:
-		// - Aeolak: Puncture, Impact, Slash.
-		// - Acceltra: Impact.
-		// Weapons without projectile:
-		// - Braton: Puncture, Impact, Slash.
-		// - Bronco: Impact.
-		// - Lex: Puncture.
-
 		function addStatCompatInfo(div, weaponData, tag, buff)
 		{
 			let incompatible = false;
@@ -468,17 +458,25 @@
 			}
 		}
 
+		// Test vectors for rollable physicals
+
+		// Weapons with projectile:
+		// - Aeolak: Impact, Puncture, Slash.
+		// - Acceltra: Impact.
+		// - Hystrix: Puncture.
+		// Weapons without projectile:
+		// - Braton: Impact, Puncture, Slash.
+		// - Bronco: Impact.
+		// - Lex: Puncture.
+
 		function weaponCanRollDamageType(weaponData, damageType)
 		{
 			const behavior = weaponData.behaviors[0];
-			if (behavior.projectile?.attack)
+			const damageTable = behavior.projectile?.attack ? behavior.projectile.attack : behavior.impact;
+			if (damageType in damageTable)
 			{
-				return (damageType in behavior.projectile.attack);
-			}
-			if (damageType in behavior.impact)
-			{
-				const totalDamage = Object.values(behavior.impact).reduce((a, b) => a + b, 0);
-				return (behavior.impact[damageType] / totalDamage) > 0.15;
+				const totalDamage = Object.values(damageTable).reduce((a, b) => a + b, 0);
+				return (damageTable[damageType] / totalDamage) > 0.15;
 			}
 			return false;
 		}
