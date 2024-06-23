@@ -424,37 +424,40 @@
 
 		function addStatCompatInfo(div, weaponData, tag, buff)
 		{
-			let incompatible = false;
-			if (tag == "WeaponProjectileSpeedMod"
-				&& weaponData?.compatibilityTags
-				&& !weaponData.compatibilityTags.find(x => x == "PROJECTILE")
-				)
+			if (weaponData)
 			{
-				incompatible = true;
-			}
-			if (tag in upgradeTagToDamageType)
-			{
-				const damageType = upgradeTagToDamageType[tag];
-				if (!weaponCanRollDamageType(weaponData, damageType))
+				let incompatible = false;
+				if (tag == "WeaponProjectileSpeedMod"
+					&& weaponData.compatibilityTags
+					&& !weaponData.compatibilityTags.find(x => x == "PROJECTILE")
+					)
 				{
-					const isPhysical = (damageType == "DT_IMPACT" || damageType == "DT_PUNCTURE" || damageType == "DT_SLASH");
-					if (isPhysical || !buff)
+					incompatible = true;
+				}
+				if (tag in upgradeTagToDamageType)
+				{
+					const damageType = upgradeTagToDamageType[tag];
+					if (!weaponCanRollDamageType(weaponData, damageType))
 					{
-						incompatible = true;
+						const isPhysical = (damageType == "DT_IMPACT" || damageType == "DT_PUNCTURE" || damageType == "DT_SLASH");
+						if (isPhysical || !buff)
+						{
+							incompatible = true;
+						}
 					}
 				}
-			}
-			if (incompatible)
-			{
-				let span = document.createElement("span");
-				span.textContent = "ⓘ";
-				span.className = "text-body-emphasis";
-				span.title = "This stat can currently not be rolled on the selected weapon.";
-				div.appendChild(span);
+				if (incompatible)
+				{
+					let span = document.createElement("span");
+					span.textContent = "ⓘ";
+					span.className = "text-body-emphasis";
+					span.title = "This stat can currently not be rolled on the selected weapon.";
+					div.appendChild(span);
 
-				span = document.createElement("span");
-				span.textContent = " ";
-				div.appendChild(span);
+					span = document.createElement("span");
+					span.textContent = " ";
+					div.appendChild(span);
+				}
 			}
 		}
 
