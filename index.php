@@ -107,9 +107,15 @@
 				return (a.type == "tag") - (b.type == "tag");
 			});
 
+			const tags_shown = {};
 			document.getElementById("results").textContent = results.length == 0 ? "Found 0 results." : "";
 			results.forEach(result =>
 			{
+				if (result.type == "tag" && (result.key in tags_shown))
+				{
+					return;
+				}
+
 				let root = document.createElement("div");
 				root.className = "card mb-3";
 				root = document.getElementById("results").appendChild(root);
@@ -179,6 +185,8 @@
 					&& "description" in result.value
 					)
 				{
+					tags_shown[result.value.description] = true;
+
 					let p = document.createElement("p");
 					p.className = "card-text";
 					p.textContent = dict[result.value.description] + " ";
