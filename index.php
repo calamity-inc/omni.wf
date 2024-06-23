@@ -43,8 +43,9 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportResources.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
-			]).then(([ dict, ExportWarframes, ExportWeapons, ExportUpgrades, ExportResources, ExportFlavour, supplementalGlyphData ]) =>
+			]).then(([ dict, ExportWarframes, ExportWeapons, ExportUpgrades, ExportResources, ExportFlavour, ExportCustoms, supplementalGlyphData ]) =>
 		{
 			window.dict = dict;
 			window.ExportWarframes = ExportWarframes;
@@ -52,6 +53,7 @@
 			window.ExportUpgrades = ExportUpgrades;
 			window.ExportResources = ExportResources;
 			window.ExportFlavour = ExportFlavour;
+			window.ExportCustoms = ExportCustoms;
 			window.supplementalGlyphData = supplementalGlyphData;
 
 			window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
@@ -439,6 +441,12 @@
 					if (entry)
 					{
 						res.push({ type: "flavour", key: entry[0], value: entry[1] });
+						continue;
+					}
+					entry = Object.entries(ExportCustoms).find(([uniqueName, item]) => item.name == result.key);
+					if (entry)
+					{
+						res.push({ type: "custom", key: entry[0], value: entry[1] });
 						continue;
 					}
 				}
