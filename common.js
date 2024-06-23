@@ -1,3 +1,11 @@
+const this_page_nav_link = document.querySelector(".nav-link.active");
+if (this_page_nav_link)
+{
+	this_page_nav_link.onclick = event => event.preventDefault();
+}
+
+// Localisation
+
 function getDictPromise()
 {
 	return fetch("https://browse.wf/warframe-public-export-plus/dict." + (localStorage.getItem("lang") ?? "en") + ".json").then(res => res.json());
