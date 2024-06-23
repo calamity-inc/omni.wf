@@ -432,6 +432,7 @@
 
 		// Weapons with projectile:
 		// - Aeolak: Impact, Puncture, Slash.
+		// - Afentis: Puncture.
 		// - Acceltra: Impact.
 		// - Hystrix: Puncture.
 		// Weapons without projectile:
@@ -446,7 +447,7 @@
 			if (damageType in damageTable)
 			{
 				const totalDamage = Object.values(damageTable).reduce((a, b) => a + b, 0);
-				return (damageTable[damageType] / totalDamage) > 0.15;
+				return (damageTable[damageType] / totalDamage) > 0.2;
 			}
 			return false;
 		}
