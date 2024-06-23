@@ -90,7 +90,7 @@
 
 			document.getElementById("query").oninput = function()
 			{
-				if (this.value.length < 2)
+				if (this.value == "")
 				{
 					location.hash = "";
 					document.getElementById("results").innerHTML = "";
