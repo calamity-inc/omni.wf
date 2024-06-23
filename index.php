@@ -49,6 +49,7 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportTextIcons.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
 			]).then(([
 				dict,
@@ -63,6 +64,7 @@
 				ExportRewards,
 				ExportRegions,
 				ExportEnemies,
+				ExportTextIcons,
 				supplementalGlyphData
 			]) =>
 		{
@@ -79,6 +81,7 @@
 			window.ExportRewards_entries = Object.entries(ExportRewards);
 			window.ExportRegions = ExportRegions;
 			window.ExportEnemies = ExportEnemies;
+			window.ExportTextIcons = ExportTextIcons;
 			window.supplementalGlyphData = supplementalGlyphData;
 
 			updateMissionDeckNames();
@@ -223,7 +226,7 @@
 				{
 					const title = document.createElement("h5");
 					title.className = "card-title";
-					title.textContent = dict[result.value.name] + " ";
+					title.innerHTML = resolveTextIcons(dict[result.value.name]) + " ";
 					{
 						const a = document.createElement("a");
 						a.textContent = "📖";
@@ -465,7 +468,7 @@
 				{
 					let p = document.createElement("p");
 					p.className = "card-text";
-					p.textContent = result.value + " ";
+					p.innerHTML = resolveTextIcons(result.value) + " ";
 					{
 						const a = document.createElement("a");
 						a.textContent = "📖";
