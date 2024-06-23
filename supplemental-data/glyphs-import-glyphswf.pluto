@@ -1,0 +1,62 @@
+local { cat, json } = require "*"
+
+local glyphs = io.contents("glyphs.json") |> json.decode|json.withorder|
+local ExportFlavour = io.contents("../../warframe-public-export-plus/ExportFlavour.json") |> json.decode
+
+for io.listdir("../../../glyphs.wf/_wf-partner") as file do
+	local lines = io.contents(file):split("\n")
+	local in_frontmatter = false
+	local frontmatter = ""
+	local markdown = ""
+	for lines as line do
+		if line == "---" then
+			in_frontmatter = not in_frontmatter
+		elseif in_frontmatter then
+			frontmatter ..= line.."\n"
+		else
+			markdown ..= line.."\n"
+		end
+	end
+	frontmatter = cat.decode(frontmatter, "flat")
+	local uniqueName
+	for key, item in ExportFlavour do
+		if item.icon == frontmatter.glyphurl then
+			uniqueName = key
+			break
+		end
+	end
+	if not uniqueName then
+		print("No flavour item found for "..file)
+	else
+		frontmatter:filter(|key, value| -> value ~= "" and key ~= "layout" and key ~= "ccid" and key ~= "glyphname" and key ~= "title" and key ~= "glyphurl", true)
+		frontmatter.markdown = markdown:rstrip()
+		if frontmatter.markdown == "" then
+			frontmatter.markdown = nil
+		end
+		if frontmatter["global-glyph-code"] then
+			frontmatter.promo_code = frontmatter["global-glyph-code"]
+			frontmatter["global-glyph-code"] = nil
+		end
+		if data := glyphs[uniqueName] then
+			if frontmatter.promo_code and data.promo_code then
+				if data.promo_code:lower() ~= frontmatter.promo_code:lower() then
+					print("Differing promo code:", data.promo_code, frontmatter.promo_code)
+				end
+			end
+		else
+			frontmatter.__order = {}
+			for key in frontmatter do
+				if key ~= "__order" then
+					frontmatter.__order:insert(key)
+				end
+			end
+			frontmatter.__order:sort()
+
+			glyphs.__order:insert(uniqueName)
+			glyphs[uniqueName] = frontmatter
+		end
+	end
+end
+
+glyphs.__order:sort()
+io.contents("glyphs.json", json.encode(glyphs, true))
