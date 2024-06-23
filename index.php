@@ -49,6 +49,7 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRecipes.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportTextIcons.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
 			]).then(([
@@ -64,6 +65,7 @@
 				ExportRewards,
 				ExportRegions,
 				ExportEnemies,
+				ExportRecipes,
 				ExportTextIcons,
 				supplementalGlyphData
 			]) =>
@@ -83,6 +85,11 @@
 			window.ExportEnemies = ExportEnemies;
 			window.ExportTextIcons = ExportTextIcons;
 			window.supplementalGlyphData = supplementalGlyphData;
+
+			window.itemToRecipeMap = {};
+			Object.entries(ExportRecipes).forEach(([uniqueName, recipe]) => {
+				itemToRecipeMap[recipe.resultType] = uniqueName;
+			});
 
 			updateMissionDeckNames();
 
@@ -486,7 +493,9 @@
 					|| result.type == "resource"
 					)
 				{
-					const storeItem = "/Lotus/StoreItems/" + result.key.substring(7);
+					const dropType = itemToRecipeMap[result.key] ?? result.key;
+					const dropIsBlueprint = !!itemToRecipeMap[result.key];
+					const storeItem = "/Lotus/StoreItems/" + dropType.substring(7);
 					const sources = [];
 					ExportRewards_entries.forEach(([deckName, tiers]) =>
 					{
@@ -515,12 +524,13 @@
 							}
 						}
 					});
-					Object.entries(ExportEnemies.droptables).forEach(([droptableName, pools]) => {
+					Object.entries(ExportEnemies.droptables).forEach(([droptableName, pools]) =>
+					{
 						for (const pool of pools)
 						{
 							for (const reward of pool.items)
 							{
-								if (reward.type == result.key)
+								if (reward.type == dropType)
 								{
 									sources.push({
 										name: droptableNames[droptableName] ?? [droptableName],
@@ -563,7 +573,12 @@
 								{
 									span.textContent += ", Rotation " + ("ABCD"[source.rotation]);
 								}
-								span.textContent += " gives " + source.itemCount + " @ " + (source.probability * 100).toFixed(2) + "%";
+								span.textContent += " gives " + source.itemCount;
+								if (dropIsBlueprint)
+								{
+									span.textContent += " blueprint";
+								}
+								span.textContent += " @ " + (source.probability * 100).toFixed(2) + "%";
 								li.appendChild(span);
 							}
 							ul.appendChild(li);
