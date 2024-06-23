@@ -488,7 +488,9 @@
 					root.appendChild(p);
 				}
 
-				if (result.type == "upgrade"
+				if (result.type == "warframe"
+					|| result.type == "weapon"
+					|| result.type == "upgrade"
 					|| result.type == "arcane"
 					|| result.type == "resource"
 					)
