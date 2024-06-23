@@ -121,6 +121,10 @@
 			window.missionDeckNames = {
 				"/Lotus/Types/Game/MissionDecks/SortieRewards": "Sortie",
 				"/Lotus/Types/Game/MissionDecks/ArchonSortieRewards": "Archon Hunt",
+				"/Lotus/Types/Game/MissionDecks/EntratiMissionRewards/EntratiVaultRewards": "Netracells",
+				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestArcaneRewards": "Deep Archimedea Arcane Rewards",
+				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestGoldRewards": "Deep Archimedea Gold Rewards",
+				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestSilverRewards": "Deep Archimedea Silver Rewards",
 			};
 			Object.values(ExportRegions).forEach(region => {
 				region.rewardManifests.forEach(deckName => {
