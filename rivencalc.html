@@ -422,6 +422,16 @@
 			"WeaponToxinDamageMod": "DT_POISON",
 		}
 
+		// Test vectors for rollable physicals
+
+		// Weapons with projectile:
+		// - Aeolak: Puncture, Impact, Slash.
+		// - Acceltra: Impact.
+		// Weapons without projectile:
+		// - Braton: Puncture, Impact, Slash.
+		// - Bronco: Impact.
+		// - Lex: Puncture.
+
 		function addStatCompatInfo(div, weaponData, tag, buff)
 		{
 			let incompatible = false;
@@ -435,7 +445,7 @@
 			if (tag in upgradeTagToDamageType)
 			{
 				const damageType = upgradeTagToDamageType[tag];
-				if (!weaponHasInnateDamage(weaponData, damageType))
+				if (!weaponCanRollDamageType(weaponData, damageType))
 				{
 					const isPhysical = (damageType == "DT_IMPACT" || damageType == "DT_PUNCTURE" || damageType == "DT_SLASH");
 					if (isPhysical || !buff)
@@ -458,18 +468,19 @@
 			}
 		}
 
-		function weaponHasInnateDamage(weaponData, damageType)
+		function weaponCanRollDamageType(weaponData, damageType)
 		{
-			if (weaponData
-				&& weaponData.behaviors
-				&& weaponData.behaviors[0]
-				&& weaponData.behaviors[0].projectile
-				&& weaponData.behaviors[0].projectile.attack
-				)
+			const behavior = weaponData.behaviors[0];
+			if (behavior.projectile?.attack)
 			{
-				return (damageType in weaponData.behaviors[0].projectile.attack);
+				return (damageType in behavior.projectile.attack);
 			}
-			return true;
+			if (damageType in behavior.impact)
+			{
+				const totalDamage = Object.values(behavior.impact).reduce((a, b) => a + b, 0);
+				return (behavior.impact[damageType] / totalDamage) > 0.15;
+			}
+			return false;
 		}
 
 		function getBuffValue(rivenType, tag, tagValue, omegaAttenuation, lvl, buffs, curses)
