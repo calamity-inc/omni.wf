@@ -87,6 +87,12 @@
 			}, []);
 			results = resolveTagsToUses(results);
 			results.sort((a, b) => {
+				if (a.type == "warframe" && b.type != "warframe") {
+					return -1;
+				}
+				if (a.type != "warframe" && b.type == "warframe") {
+					return 1;
+				}
 				return (a.type == "tag") - (b.type == "tag");
 			});
 
