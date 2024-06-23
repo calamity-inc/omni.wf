@@ -31,6 +31,11 @@
 			document.getElementById("results").textContent = "Loading...";
 		}
 
+		document.getElementById("query").oninput = function()
+		{
+			document.getElementById("results").textContent = "Sorry, data is still downloading. Your query will be processed ASAP.";
+		};
+
 		Promise.all([
 			getDictPromise(),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
@@ -47,9 +52,9 @@
 
 			window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
 
-			if (params.has("q"))
+			if (document.getElementById("query").value)
 			{
-				doQuery(params.get("q"));
+				doQuery(document.getElementById("query").value);
 			}
 
 			document.getElementById("query").oninput = function()
