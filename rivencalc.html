@@ -320,7 +320,7 @@
 			const curses = parseInt(document.getElementById("curses").value);
 			const mod_data = ExportUpgrades["/Lotus/Upgrades/Mods/Randomized/" + rivenType];
 			let weaponData;
-			if (weaponConfig)
+			if (window.weaponConfig)
 			{
 				const weaponLocTag = Object.entries(dict).find(x => x[1] == weaponConfig)[0];
 				weaponData = Object.values(ExportWeapons).find(weapon => weapon.name == weaponLocTag);
