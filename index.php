@@ -40,13 +40,15 @@
 			getDictPromise(),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportResources.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
-			]).then(([ dict, ExportWarframes, ExportWeapons, ExportFlavour, supplementalGlyphData ]) =>
+			]).then(([ dict, ExportWarframes, ExportWeapons, ExportResources, ExportFlavour, supplementalGlyphData ]) =>
 		{
 			window.dict = dict;
 			window.ExportWarframes = ExportWarframes;
 			window.ExportWeapons = ExportWeapons;
+			window.ExportResources = ExportResources;
 			window.ExportFlavour = ExportFlavour;
 			window.supplementalGlyphData = supplementalGlyphData;
 
@@ -410,6 +412,12 @@
 					if (entry)
 					{
 						res.push({ type: "weapon", key: entry[0], value: entry[1] });
+						continue;
+					}
+					entry = Object.entries(ExportResources).find(([uniqueName, item]) => item.name == result.key);
+					if (entry)
+					{
+						res.push({ type: "resource", key: entry[0], value: entry[1] });
 						continue;
 					}
 					entry = Object.entries(ExportFlavour).find(([uniqueName, item]) => item.name == result.key);
