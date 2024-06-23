@@ -233,7 +233,14 @@
 				{
 					let p = document.createElement("p");
 					p.className = "card-text";
-					p.textContent = "Max Rank: " + result.value.fusionLimit + " (" + ("●".repeat(result.value.fusionLimit)) + ")";
+					if (result.value.fusionLimit == 0)
+					{
+						p.textContent = "This mod can not be upgraded.";
+					}
+					else
+					{
+						p.textContent = "Max Rank: " + result.value.fusionLimit + " (" + ("●".repeat(result.value.fusionLimit)) + ")";
+					}
 					root.appendChild(p);
 				}
 				else if (result.type == "flavour")
