@@ -90,6 +90,12 @@
 			window.supplementalGlyphData = supplementalGlyphData;
 
 			window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
+			window.ExportWarframes_entries = Object.entries(ExportWarframes);
+			window.ExportWeapons_entries = Object.entries(ExportWeapons);
+			window.ExportUpgrades_entries = Object.entries(ExportUpgrades);
+			window.ExportResources_entries = Object.entries(ExportResources);
+			window.ExportFlavour_entries = Object.entries(ExportFlavour);
+			window.ExportCustoms_entries = Object.entries(ExportCustoms);
 
 			if (document.getElementById("query").value)
 			{
@@ -124,12 +130,19 @@
 
 		function doQuery(query)
 		{
+			console.time("Input to language tags");
 			let results = getDictEntriesFromQuery(query).reduce((arr, [key, value]) =>
 			{
 				arr.push({ type: "tag", key, value });
 				return arr;
 			}, []);
+			console.timeEnd("Input to language tags");
+
+			console.time("resolveTagsToUses");
 			results = resolveTagsToUses(results);
+			console.timeEnd("resolveTagsToUses");
+
+			console.time("Sort results");
 			results.sort((a, b) => {
 				if (a.type == "warframe" && b.type != "warframe") {
 					return -1;
@@ -139,6 +152,7 @@
 				}
 				return (a.type == "tag") - (b.type == "tag");
 			});
+			console.timeEnd("Sort results");
 
 			const tags_shown = {};
 			document.getElementById("results").textContent = results.length == 0 ? "Found 0 results." : "";
@@ -430,7 +444,8 @@
 			});
 		}
 
-		function getDictEntriesFromQuery(query) {
+		function getDictEntriesFromQuery(query)
+		{
 			let num_results = 0;
 			query = query.toLowerCase();
 			return dict_entries.filter(([key, value]) =>
@@ -454,37 +469,37 @@
 			{
 				if (result.type == "tag")
 				{
-					let entry = Object.entries(ExportWarframes).find(([uniqueName, item]) => item.name == result.key);
+					let entry = ExportWarframes_entries.find(([uniqueName, item]) => item.name == result.key);
 					if (entry)
 					{
 						res.push({ type: "warframe", key: entry[0], value: entry[1] });
 						continue;
 					}
-					entry = Object.entries(ExportWeapons).find(([uniqueName, item]) => item.name == result.key && item.totalDamage != 0);
+					entry = ExportWeapons_entries.find(([uniqueName, item]) => item.name == result.key && item.totalDamage != 0);
 					if (entry)
 					{
 						res.push({ type: "weapon", key: entry[0], value: entry[1] });
 						continue;
 					}
-					entry = Object.entries(ExportUpgrades).find(([uniqueName, item]) => item.name == result.key);
+					entry = ExportUpgrades_entries.find(([uniqueName, item]) => item.name == result.key);
 					if (entry)
 					{
 						res.push({ type: "upgrade", key: entry[0], value: entry[1] });
 						continue;
 					}
-					entry = Object.entries(ExportResources).find(([uniqueName, item]) => item.name == result.key);
+					entry = ExportResources_entries.find(([uniqueName, item]) => item.name == result.key);
 					if (entry)
 					{
 						res.push({ type: "resource", key: entry[0], value: entry[1] });
 						continue;
 					}
-					entry = Object.entries(ExportFlavour).find(([uniqueName, item]) => item.name == result.key);
+					entry = ExportFlavour_entries.find(([uniqueName, item]) => item.name == result.key);
 					if (entry)
 					{
 						res.push({ type: "flavour", key: entry[0], value: entry[1] });
 						continue;
 					}
-					entry = Object.entries(ExportCustoms).find(([uniqueName, item]) => item.name == result.key);
+					entry = ExportCustoms_entries.find(([uniqueName, item]) => item.name == result.key);
 					if (entry)
 					{
 						res.push({ type: "custom", key: entry[0], value: entry[1] });
