@@ -160,7 +160,16 @@
 				{
 					const subtitle = document.createElement("h6");
 					subtitle.className = "card-subtitle mb-2 text-body-secondary";
-					subtitle.textContent = result.key;
+					subtitle.textContent = result.key + " ";
+					{
+						const a = document.createElement("a");
+						a.textContent = "📖";
+						a.title = "View raw data";
+						a.href = "https://browse.wf" + result.key;
+						a.target = "_blank";
+						a.style.textDecoration = "none";
+						subtitle.appendChild(a);
+					}
 					root.appendChild(subtitle);
 				}
 
@@ -183,25 +192,9 @@
 					root.appendChild(p);
 				}
 
-				if (result.type == "warframe")
-				{
-					let a = document.createElement("a");
-					a.className = "card-link";
-					a.href = "https://browse.wf" + result.key;
-					a.target = "_blank";
-					a.textContent = "View raw data.";
-					root.appendChild(a);
-				}
-				else if (result.type == "weapon")
+				if (result.type == "weapon")
 				{
 					// TODO: Show riven disposition, link to riven calculator.
-
-					let a = document.createElement("a");
-					a.className = "card-link";
-					a.href = "https://browse.wf" + result.key;
-					a.target = "_blank";
-					a.textContent = "View raw data.";
-					root.appendChild(a);
 				}
 				else if (result.type == "upgrade")
 				{
@@ -209,13 +202,6 @@
 					p.className = "card-text";
 					p.textContent = "Max Rank: " + result.value.fusionLimit + " (" + ("●".repeat(result.value.fusionLimit)) + ")";
 					root.appendChild(p);
-
-					let a = document.createElement("a");
-					a.className = "card-link";
-					a.href = "https://browse.wf" + result.key;
-					a.target = "_blank";
-					a.textContent = "View raw data.";
-					root.appendChild(a);
 				}
 				else if (result.type == "flavour")
 				{
