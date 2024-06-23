@@ -218,7 +218,18 @@
 
 				if (result.type == "weapon")
 				{
-					// TODO: Show riven disposition, link to riven calculator.
+					let p = document.createElement("p");
+					p.className = "card-text";
+					p.innerHTML = "Riven Disposition: " + result.value.omegaAttenuation + "x (<span class='font-monospace'>●" + (result.value.omegaAttenuation >= 0.7 ? "●" : "○") + (result.value.omegaAttenuation >= 0.9 ? "●" : "○") + (result.value.omegaAttenuation >= 1.11 ? "●" : "○") + (result.value.omegaAttenuation >= 1.31 ? "●" : "○") + "</span>) &middot; ";
+					{
+						const a = document.createElement("a");
+						a.textContent = "View stat ranges";
+						a.href = "/rivencalc#weapon=" + encodeURIComponent(dict[result.value.name]);
+						a.target = "_blank";
+						a.style.textDecoration = "none";
+						p.appendChild(a);
+					}
+					root.appendChild(p);
 				}
 				else if (result.type == "upgrade")
 				{
