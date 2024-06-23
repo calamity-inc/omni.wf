@@ -133,6 +133,11 @@
 					window.missionDeckNames[deckName] ??= [];
 					window.missionDeckNames[deckName].push(dict[region.name] + " (" + dict[region.systemName] + ")");
 				});
+				if (region.cacheRewardManifest)
+				{
+					window.missionDeckNames[region.cacheRewardManifest] ??= [];
+					window.missionDeckNames[region.cacheRewardManifest].push("Caches on " + dict[region.name] + " (" + dict[region.systemName] + ")");
+				}
 			});
 
 			window.droptableNames = {};
