@@ -41,6 +41,7 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportArcanes.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportResources.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
@@ -54,6 +55,7 @@
 				ExportWarframes,
 				ExportWeapons,
 				ExportUpgrades,
+				ExportArcanes,
 				ExportResources,
 				ExportFlavour,
 				ExportCustoms,
@@ -69,6 +71,7 @@
 			window.ExportWarframes_entries = Object.entries(ExportWarframes);
 			window.ExportWeapons_entries = Object.entries(ExportWeapons);
 			window.ExportUpgrades_entries = Object.entries(ExportUpgrades);
+			window.ExportArcanes_entries = Object.entries(ExportArcanes);
 			window.ExportResources_entries = Object.entries(ExportResources);
 			window.ExportFlavour_entries = Object.entries(ExportFlavour);
 			window.ExportCustoms_entries = Object.entries(ExportCustoms);
@@ -458,7 +461,10 @@
 					root.appendChild(p);
 				}
 
-				if (result.type == "upgrade" || result.type == "resource")
+				if (result.type == "upgrade"
+					|| result.type == "arcane"
+					|| result.type == "resource"
+					)
 				{
 					const storeItem = "/Lotus/StoreItems/" + result.key.substring(7);
 					const sources = [];
@@ -567,6 +573,12 @@
 					if (entry)
 					{
 						res.push({ type: "upgrade", key: entry[0], value: entry[1] });
+						continue;
+					}
+					entry = ExportArcanes_entries.find(([uniqueName, item]) => item.name == result.key);
+					if (entry)
+					{
+						res.push({ type: "arcane", key: entry[0], value: entry[1] });
 						continue;
 					}
 					entry = ExportResources_entries.find(([uniqueName, item]) => item.name == result.key);
