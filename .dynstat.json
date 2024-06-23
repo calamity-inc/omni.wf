@@ -1,0 +1,4 @@
+{
+	"dirs": [".", "supplemental-data"],
+	"minify": true
+}
