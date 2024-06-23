@@ -44,18 +44,23 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportResources.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
-			]).then(([ dict, ExportWarframes, ExportWeapons, ExportUpgrades, ExportResources, ExportFlavour, ExportCustoms, supplementalGlyphData ]) =>
+			]).then(([
+				dict,
+				ExportWarframes,
+				ExportWeapons,
+				ExportUpgrades,
+				ExportResources,
+				ExportFlavour,
+				ExportCustoms,
+				ExportRewards,
+				ExportRegions,
+				supplementalGlyphData
+			]) =>
 		{
 			window.dict = dict;
-			window.ExportWarframes = ExportWarframes;
-			window.ExportWeapons = ExportWeapons;
-			window.ExportUpgrades = ExportUpgrades;
-			window.ExportResources = ExportResources;
-			window.ExportFlavour = ExportFlavour;
-			window.ExportCustoms = ExportCustoms;
-			window.supplementalGlyphData = supplementalGlyphData;
-
 			window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
 			window.ExportWarframes_entries = Object.entries(ExportWarframes);
 			window.ExportWeapons_entries = Object.entries(ExportWeapons);
@@ -63,6 +68,11 @@
 			window.ExportResources_entries = Object.entries(ExportResources);
 			window.ExportFlavour_entries = Object.entries(ExportFlavour);
 			window.ExportCustoms_entries = Object.entries(ExportCustoms);
+			window.ExportRewards_entries = Object.entries(ExportRewards);
+			window.ExportRegions = ExportRegions;
+			window.supplementalGlyphData = supplementalGlyphData;
+
+			updateMissionDeckNames();
 
 			if (document.getElementById("query").value)
 			{
@@ -87,6 +97,8 @@
 			{
 				window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
 
+				updateMissionDeckNames();
+
 				const params = new URLSearchParams(location.hash.replace("#", ""));
 				if (params.has("q"))
 				{
@@ -94,6 +106,19 @@
 				}
 			};
 		});
+
+		function updateMissionDeckNames()
+		{
+			window.missionDeckNames = {
+				"/Lotus/Types/Game/MissionDecks/SortieRewards": "Sortie",
+				"/Lotus/Types/Game/MissionDecks/ArchonSortieRewards": "Archon Hunt",
+			};
+			Object.values(ExportRegions).forEach(region => {
+				region.rewardManifests.forEach(deckName => {
+					window.missionDeckNames[deckName] = dict[region.name] + " (" + dict[region.systemName] + ")";
+				});
+			});
+		}
 
 		function doQuery(query)
 		{
@@ -418,6 +443,51 @@
 						p.appendChild(a);
 					}
 					root.appendChild(p);
+				}
+
+				if (result.type == "upgrade" || result.type == "resource")
+				{
+					const storeItem = "/Lotus/StoreItems/" + result.key.substring(7);
+					const sources = [];
+					ExportRewards_entries.forEach(([deckName, tiers]) =>
+					{
+						for (let i = 0; i != tiers.length; ++i)
+						{
+							for (const reward of tiers[i])
+							{
+								if (reward.type == storeItem
+									&& reward.probability // ignoring relics for now
+									)
+								{
+									if (deckName in missionDeckNames)
+									{
+										sources.push({
+											deckName: missionDeckNames[deckName] ?? deckName,
+											rotation: i,
+											itemCount: reward.itemCount,
+											probability: reward.probability
+										});
+									}
+									else
+									{
+										console.warn("Mission deck has", dict[result.value.name], "but no human friendly name:", deckName);
+									}
+								}
+							}
+						}
+					});
+					if (sources.length != 0)
+					{
+						sources.sort((a, b) => (b.itemCount * b.probability) - (a.itemCount * a.probability));
+
+						let ul = document.createElement("ul");
+						sources.forEach(source => {
+							let li = document.createElement("li");
+							li.textContent = source.deckName + ", Rotation " + "ABCD"[source.rotation] + " gives " + source.itemCount + " @ " + (source.probability * 100).toFixed(2) + "%";
+							ul.appendChild(li);
+						});
+						root.appendChild(ul);
+					}
 				}
 			});
 		}
