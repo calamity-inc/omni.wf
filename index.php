@@ -254,13 +254,14 @@
 
 				if (typeof result.value == "object"
 					&& "description" in result.value
+					&& result.value.description != ""
 					)
 				{
 					tags_shown[result.value.description] = true;
 
 					let p = document.createElement("p");
 					p.className = "card-text";
-					p.textContent = dict[result.value.description] + " ";
+					p.textContent = (dict[result.value.description] ?? result.value.description) + " ";
 					{
 						const a = document.createElement("a");
 						a.textContent = "📖";
