@@ -40,14 +40,16 @@
 			getDictPromise(),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportResources.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("supplemental-data/glyphs.json").then(res => res.json())
-			]).then(([ dict, ExportWarframes, ExportWeapons, ExportResources, ExportFlavour, supplementalGlyphData ]) =>
+			]).then(([ dict, ExportWarframes, ExportWeapons, ExportUpgrades, ExportResources, ExportFlavour, supplementalGlyphData ]) =>
 		{
 			window.dict = dict;
 			window.ExportWarframes = ExportWarframes;
 			window.ExportWeapons = ExportWeapons;
+			window.ExportUpgrades = ExportUpgrades;
 			window.ExportResources = ExportResources;
 			window.ExportFlavour = ExportFlavour;
 			window.supplementalGlyphData = supplementalGlyphData;
@@ -118,7 +120,7 @@
 					row.className = "row g-0";
 					{
 						const col = document.createElement("div");
-						col.className = "col-3";
+						col.className = "col-2";
 						{
 							const img = document.createElement("img");
 							img.className = "img-fluid rounded-start";
@@ -129,7 +131,7 @@
 					}
 					{
 						root = row.appendChild(document.createElement("div"));
-						root.className = "col-9";
+						root.className = "col-10";
 					}
 				}
 
@@ -181,23 +183,7 @@
 					root.appendChild(p);
 				}
 
-				if (result.type == "tag")
-				{
-					let p = document.createElement("p");
-					p.className = "card-text";
-					p.textContent = result.value + " ";
-					{
-						const a = document.createElement("a");
-						a.textContent = "📖";
-						a.title = "See other languages";
-						a.href = "https://browse.wf" + result.key;
-						a.target = "_blank";
-						a.style.textDecoration = "none";
-						p.appendChild(a);
-					}
-					root.appendChild(p);
-				}
-				else if (result.type == "warframe")
+				if (result.type == "warframe")
 				{
 					let a = document.createElement("a");
 					a.className = "card-link";
@@ -209,6 +195,20 @@
 				else if (result.type == "weapon")
 				{
 					// TODO: Show riven disposition, link to riven calculator.
+
+					let a = document.createElement("a");
+					a.className = "card-link";
+					a.href = "https://browse.wf" + result.key;
+					a.target = "_blank";
+					a.textContent = "View raw data.";
+					root.appendChild(a);
+				}
+				else if (result.type == "upgrade")
+				{
+					let p = document.createElement("p");
+					p.className = "card-text";
+					p.textContent = "Max Rank: " + result.value.fusionLimit + " (" + ("●".repeat(result.value.fusionLimit)) + ")";
+					root.appendChild(p);
 
 					let a = document.createElement("a");
 					a.className = "card-link";
@@ -375,6 +375,22 @@
 						root.appendChild(p);
 					}
 				}
+				else if (result.type == "tag")
+				{
+					let p = document.createElement("p");
+					p.className = "card-text";
+					p.textContent = result.value + " ";
+					{
+						const a = document.createElement("a");
+						a.textContent = "📖";
+						a.title = "See other languages";
+						a.href = "https://browse.wf" + result.key;
+						a.target = "_blank";
+						a.style.textDecoration = "none";
+						p.appendChild(a);
+					}
+					root.appendChild(p);
+				}
 			});
 		}
 
@@ -412,6 +428,12 @@
 					if (entry)
 					{
 						res.push({ type: "weapon", key: entry[0], value: entry[1] });
+						continue;
+					}
+					entry = Object.entries(ExportUpgrades).find(([uniqueName, item]) => item.name == result.key);
+					if (entry)
+					{
+						res.push({ type: "upgrade", key: entry[0], value: entry[1] });
 						continue;
 					}
 					entry = Object.entries(ExportResources).find(([uniqueName, item]) => item.name == result.key);
