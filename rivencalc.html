@@ -165,11 +165,13 @@
 		Promise.all([
 			getDictPromise(),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json())
-		]).then(([ dict, ExportWeapons, ExportUpgrades ]) => {
+			fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportTextIcons.json").then(res => res.json())
+		]).then(([ dict, ExportWeapons, ExportUpgrades, ExportTextIcons ]) => {
 			window.dict = dict;
 			window.ExportWeapons = ExportWeapons;
 			window.ExportUpgrades = ExportUpgrades;
+			window.ExportTextIcons = ExportTextIcons;
 
 			updateDatalist();
 
@@ -335,7 +337,7 @@
 					let div = document.createElement("div");
 					{
 						let span = document.createElement("span");
-						span.innerHTML = dict[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
+						span.innerHTML = resolveTextIcons(dict[upgrade.upgradeValues[0].locTag]).split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
 						div.appendChild(span);
 					}
 					addStatCompatInfo(div, weaponData, upgrade.tag, true);
@@ -371,7 +373,7 @@
 					let div = document.createElement("div");
 					{
 						let span = document.createElement("span");
-						span.innerHTML = dict[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
+						span.innerHTML = resolveTextIcons(dict[upgrade.upgradeValues[0].locTag]).split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
 						div.appendChild(span);
 					}
 					addStatCompatInfo(div, weaponData, upgrade.tag, false);

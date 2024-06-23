@@ -39,3 +39,18 @@ if (localStorage.getItem("lang"))
 {
 	setLanguageIndicator(localStorage.getItem("lang"));
 }
+
+// Text icons
+
+function resolveTextIcons(text)
+{
+	return text.replaceAll(/<[^>]+>/g, (match) => {
+		const name = match.split("<").join("").split(">").join("");
+		if (ExportTextIcons[name]?.DIT_AUTO)
+		{
+			return "<img style='height:1em;position:relative;bottom:2px' src='https://browse.wf" + ExportTextIcons[name].DIT_AUTO + "' />";
+		}
+		//console.warn("Failed to resolve text icon:", name);
+		return "&lt;" + name + "&gt;";
+	});
+}
