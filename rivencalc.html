@@ -205,29 +205,28 @@
 				const value = getValue(this);
 				if (value)
 				{
+					weaponConfig = this.value;
+
 					const [rivenType, omegaAttenuation] = value.split(":");
 					document.getElementById("riven-type").value = rivenType;
 					document.getElementById("omega-attenuation").value = omegaAttenuation;
 					calculateStats();
 
-					weaponConfig = this.value;
 					saveSettings();
 				}
 			};
 
 			document.getElementById("riven-type").onchange = function()
 			{
-				calculateStats();
-
 				weaponConfig = document.getElementById("riven-type").value + ":" + document.getElementById("omega-attenuation").value;
+				calculateStats();
 				saveSettings();
 			};
 
 			document.getElementById("omega-attenuation").onchange = function()
 			{
-				calculateStats();
-
 				weaponConfig = document.getElementById("riven-type").value + ":" + document.getElementById("omega-attenuation").value;
+				calculateStats();
 				saveSettings();
 			};
 
