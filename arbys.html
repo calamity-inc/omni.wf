@@ -1,1 +1,455 @@
-<!doctype html><html lang="en" data-bs-theme="dark"><head><title>Arbitration Schedule | omni.wf</title><meta name="viewport" content="width=device-width, initial-scale=1"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><link rel="icon" href="https://browse.wf/Lotus/Interface/Icons/Categories/GrimoireModIcon.png"><style>#log h3:not(:first-child){margin-top:1rem}#log span,#log b{display:block;margin-bottom:1px}</style></head><body data-bs-theme="dark"><nav class="navbar navbar-expand-md bg-body-tertiary"><div class="container-fluid"><a class="navbar-brand" href="/">Warframe Omni Tool</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbar-content"><div class="navbar-nav me-auto mb-2 mb-md-0"><a class="nav-link active" aria-current="page" href="#" onclick="event.preventDefault();">Arbitration Schedule</a><a class="nav-link" href="/rivencalc">Riven Calculator</a><a class="nav-link" href="/glyphs">Glyphs</a></div><div class="nav-item dropdown mb-2 mb-md-0"><a id="lang-dropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">English</a><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item active" href="#" data-lang="en" onclick="event.preventDefault();setLanguage('en');">English</a></li><li><a class="dropdown-item" href="#" data-lang="de" onclick="event.preventDefault();setLanguage('de');">Deutsch</a></li><li><a class="dropdown-item" href="#" data-lang="es" onclick="event.preventDefault();setLanguage('es');">Español</a></li><li><a class="dropdown-item" href="#" data-lang="fr" onclick="event.preventDefault();setLanguage('fr');">Français</a></li><li><a class="dropdown-item" href="#" data-lang="it" onclick="event.preventDefault();setLanguage('it');">Italiano</a></li><li><a class="dropdown-item" href="#" data-lang="ja" onclick="event.preventDefault();setLanguage('ja');">日本語</a></li><li><a class="dropdown-item" href="#" data-lang="ko" onclick="event.preventDefault();setLanguage('ko');">한국어</a></li><li><a class="dropdown-item" href="#" data-lang="pl" onclick="event.preventDefault();setLanguage('pl');">Polski</a></li><li><a class="dropdown-item" href="#" data-lang="pt" onclick="event.preventDefault();setLanguage('pt');">Português</a></li><li><a class="dropdown-item" href="#" data-lang="ru" onclick="event.preventDefault();setLanguage('ru');">Русский</a></li><li><a class="dropdown-item" href="#" data-lang="tr" onclick="event.preventDefault();setLanguage('tr');">Türkçe</a></li><li><a class="dropdown-item" href="#" data-lang="uk" onclick="event.preventDefault();setLanguage('uk');">Українська</a></li><li><a class="dropdown-item" href="#" data-lang="zh" onclick="event.preventDefault();setLanguage('zh');">简体中文</a></li><li><a class="dropdown-item" href="#" data-lang="tc" onclick="event.preventDefault();setLanguage('tc');">繁體中文</a></li><li><a class="dropdown-item" href="#" data-lang="th" onclick="event.preventDefault();setLanguage('th');">แบบไทย</a></li></ul></div></div></div></nav><div class="p-3"><p>The next <select id="select-days"><option value="1">24 hours</option><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option><option value="365">12 months</option><option value="9999999999">eon</option></select> of arbitrations, in <select id="select-tz"><option id="local-time-option" value="local">local time</option><option value="zulu">universal time (UTC+0)</option></select>, using <select id="select-hourfmt"><option value="mil">military time</option><option value="24">24-hour time</option><option value="12">12-hour time</option></select>.</p><div class="row"><div id="log" class="col-xl-6 mb-3"><p>Loading, please wait...</p></div><div class="col-xl-6"><table class="table"><thead><td></td><th colspan="2">Next Occurrence</th></thead><tbody><tr id="next-type-2"><th><input id="filter-type-2" type="checkbox" class="form-check-input" checked/> <label for="filter-type-2">Survival</label></th><td></td><td></td></tr><tr id="next-type-8"><th><input id="filter-type-8" type="checkbox" class="form-check-input" checked/> <label for="filter-type-8">Defense</label></th><td></td><td></td></tr><tr id="next-type-13"><th><input id="filter-type-13" type="checkbox" class="form-check-input" checked/> <label for="filter-type-13">Interception</label></th><td></td><td></td></tr><tr id="next-type-17"><th><input id="filter-type-17" type="checkbox" class="form-check-input" checked/> <label for="filter-type-17">Excavation</label></th><td></td><td></td></tr><tr id="next-type-21"><th><input id="filter-type-21" type="checkbox" class="form-check-input" checked/> <label for="filter-type-21">Infested Salvage</label></th><td></td><td></td></tr><tr id="next-type-27"><th><input id="filter-type-27" type="checkbox" class="form-check-input" checked/> <label for="filter-type-27">Defection</label></th><td></td><td></td></tr><tr id="next-type-33"><th><input id="filter-type-33" type="checkbox" class="form-check-input" checked/> <label for="filter-type-33">Disruption</label></th><td></td><td></td></tr><tr id="next-tier-S"><th><input id="filter-tier-S" type="checkbox" class="form-check-input" checked/> <label for="filter-tier-S">S Tier</label></th><td></td><td></td></tr><tr id="next-tier-A"><th><input id="filter-tier-A" type="checkbox" class="form-check-input" checked/> <label for="filter-tier-A">A Tier</label></th><td></td><td></td></tr><tr id="next-tier-B"><th><input id="filter-tier-B" type="checkbox" class="form-check-input" checked/> <label for="filter-tier-B">B Tier</label></th><td></td><td></td></tr><tr id="next-tier-C"><th><input id="filter-tier-C" type="checkbox" class="form-check-input" checked/> <label for="filter-tier-C">C Tier</label></th><td></td><td></td></tr><tr id="next-tier-D"><th><input id="filter-tier-D" type="checkbox" class="form-check-input" checked/> <label for="filter-tier-D">D Tier</label></th><td></td><td></td></tr><tr id="next-tier-F"><th><input id="filter-tier-F" type="checkbox" class="form-check-input" checked/> <label for="filter-tier-F">F Tier</label></th><td></td><td></td></tr><tr id="next-fc-0"><th><input id="filter-fc-0" type="checkbox" class="form-check-input" checked/> <label for="filter-fc-0">Grineer</label></th><td></td><td></td></tr><tr id="next-fc-1"><th><input id="filter-fc-1" type="checkbox" class="form-check-input" checked/> <label for="filter-fc-1">Corpus</label></th><td></td><td></td></tr><tr id="next-fc-2"><th><input id="filter-fc-2" type="checkbox" class="form-check-input" checked/> <label for="filter-fc-2">Infested</label></th><td></td><td></td></tr><tr id="next-fc-3"><th><input id="filter-fc-3" type="checkbox" class="form-check-input" checked/> <label for="filter-fc-3">Corrupted</label></th><td></td><td></td></tr></tbody></table></div></div></div><script src="common.js"></script><script>const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];const months=["January","February","March","April","May","June","July","August","September","October","November","December"];const tiers={ClanNode24:"A",SolNode195:"A",SolNode224:"A",SolNode42:"A",SolNode211:"B",SolNode22:"B",SolNode707:"B",SolNode72:"B",ClanNode15:"C",ClanNode4:"C",ClanNode6:"C",SettlementNode11:"C",SolNode106:"C",SolNode122:"C",SolNode125:"C",SolNode130:"C",SolNode164:"C",SolNode212:"C",SolNode25:"C",SolNode26:"C",SolNode43:"C",SolNode46:"C",SolNode64:"C",ClanNode0:"D",ClanNode18:"D",ClanNode2:"D",ClanNode8:"D",SolNode167:"D",SolNode172:"D",SolNode17:"D",SolNode185:"D",SolNode18:"D",SolNode23:"D",SolNode305:"D",SolNode402:"D",SolNode412:"D",SolNode85:"D",SolNode907:"D",ClanNode22:"S",SolNode147:"S",SolNode149:"S"};function loc(key){return dict[key]??key}function totwo(num){if(num<10){return"0"+num}return num}function totit(str){return str.replace(/\S+/g,word=>word.charAt(0).toUpperCase()+word.substr(1).toLowerCase())}function formattz(offset){if(offset==0){return"UTC+0"}offset/=60;if(offset<0){return"UTC+"+(offset*-1);}return"UTC-"+offset;}document.getElementById("local-time-option").textContent+=" ("+formattz(new Date().getTimezoneOffset())+")";function formathour(hour){switch(document.getElementById("select-hourfmt").value){case"mil":default:return totwo(hour)+"00"+(document.getElementById("select-tz").value=="zulu"?"Z":"");case"24":return totwo(hour)+":00";case"12":return((hour%12)==0?"12":(hour%12))+(hour>=12?"pm":"am");}}const params=new URLSearchParams(location.hash.replace("#",""));if(params.has("days")){document.getElementById("select-days").value=params.get("days");}else if("userAgentData"in navigator&&navigator.userAgentData.mobile){document.getElementById("select-days").value=1;}if(params.has("tz")){document.getElementById("select-tz").value=params.get("tz");}if(params.has("hourfmt")){document.getElementById("select-hourfmt").value=params.get("hourfmt");}if(params.has("exclude")){params.get("exclude").split(".").forEach(opt=>{const checkbox=document.getElementById("filter-"+opt);if(checkbox){checkbox.checked=!1;}});}Promise.all([getDictPromise(),fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res=>res.json()),fetch("https://browse.wf/arbys.txt").then(res=>res.text())]).then(([dict,ExportRegions,arbys])=>{window.dict=dict;window.ExportRegions=ExportRegions;window.arbys=arbys.split("\n").map(line=>line.split(",")).filter(arr=>arr.length==2);onLanguageUpdate=function(){updateLog();updateFilterNamesForLocale();};onLanguageUpdate();});function updateFilterNamesForLocale(){document.querySelector("label[for=filter-type-2]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Survival"]);document.querySelector("label[for=filter-type-8]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Defense"]);document.querySelector("label[for=filter-type-13]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Territory"]);document.querySelector("label[for=filter-type-17]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Excavation"]);document.querySelector("label[for=filter-type-21]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Purify"]);document.querySelector("label[for=filter-type-27]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Evacuation"]);document.querySelector("label[for=filter-type-33]").textContent=totit(dict["/Lotus/Language/Missions/MissionName_Artifact"]);document.querySelector("label[for=filter-fc-0]").textContent=dict["/Lotus/Language/Game/Faction_GrineerUC"];document.querySelector("label[for=filter-fc-1]").textContent=dict["/Lotus/Language/Game/Faction_CorpusUC"];document.querySelector("label[for=filter-fc-2]").textContent=dict["/Lotus/Language/Game/Faction_InfestationUC"];document.querySelector("label[for=filter-fc-3]").textContent=dict["/Lotus/Language/Game/Faction_OrokinUC"];}function updateLog(){console.time("updateLog");const zulu=(document.getElementById("select-tz").value=="zulu");window.currentHour=parseInt((new Date().getTime()/1000)/3600)*3600;const epochHour=parseInt(arbys[0][0]/3600)*3600;const currentHourIndex=(currentHour-epochHour)/3600;const currentYear=zulu?new Date().getUTCFullYear():new Date().getFullYear();let remainingArbys=parseInt(document.getElementById("select-days").value)*24;let lastArbyDay=-1;document.getElementById("log").innerHTML="";for(let i=currentHourIndex;i!=arbys.length&&remainingArbys-->0;++i){const arr=arbys[i];const thisArbyGrade=(tiers[arr[1]]??"F");if(!document.getElementById("filter-tier-"+thisArbyGrade).checked){continue;}const node=ExportRegions[arr[1]];if(!document.getElementById("filter-type-"+node.missionIndex).checked||!document.getElementById("filter-fc-"+node.factionIndex).checked){continue;}const date=new Date(arr[0]*1000);const thisArbyHour=zulu?date.getUTCHours():date.getHours();const thisArbyDay=zulu?date.getUTCDate():date.getDate();if(thisArbyDay!=lastArbyDay){lastArbyDay=thisArbyDay;const thisArbyWeekDay=zulu?date.getUTCDay():date.getDay();const thisArbyMonth=zulu?date.getUTCMonth():date.getMonth();const thisArbyYear=zulu?date.getUTCFullYear():date.getFullYear();let h3=document.createElement("h3");h3.textContent=days[thisArbyWeekDay]+", "+months[thisArbyMonth]+" "+thisArbyDay;if(thisArbyYear!=currentYear){h3.textContent+=", "+thisArbyYear;}document.getElementById("log").appendChild(h3);}let span=document.createElement(arr[0]==currentHour?"b":"span");span.setAttribute("data-timestamp",arr[0]);span.textContent=formathour(thisArbyHour)+" • "+totit(loc(node.missionName))+" - "+dict[node.factionName]+" @ "+loc(node.name)+", "+loc(node.systemName)+" ("+thisArbyGrade+" tier";if("darkSectorData"in node){span.textContent+=", "+(node.darkSectorData.resourceBonus*100).toFixed(0)+"% resource bonus";}span.textContent+=")";document.getElementById("log").appendChild(span);}if(document.getElementById("log").children.length==0){let span=document.createElement("span");span.textContent="I've looked through "+(arbys.length-currentHourIndex)+" arbitrations but not a one matches your filters. :/";document.getElementById("log").appendChild(span);}document.querySelectorAll("table tbody tr").forEach(tr=>{tr.setAttribute("data-starved","true");tr.children[1].innerHTML="N/A";tr.children[2].innerHTML="N/A";});for(let i=currentHourIndex;i!=arbys.length&&document.querySelector("[data-starved]");++i){const arr=arbys[i];const date=new Date(arr[0]*1000);const node=ExportRegions[arr[1]];const thisArbyHour=zulu?date.getUTCHours():date.getHours();const thisArbyDay=zulu?date.getUTCDate():date.getDate();const thisArbyWeekDay=zulu?date.getUTCDay():date.getDay();const thisArbyMonth=zulu?date.getUTCMonth():date.getMonth();const thisArbyGrade=(tiers[arr[1]]??"F");{const tr=document.getElementById("next-tier-"+thisArbyGrade);if(tr.children[1].innerHTML=="N/A"){tr.removeAttribute("data-starved");tr.children[1].setAttribute("data-timestamp",arr[0]);tr.children[1].textContent=days[thisArbyWeekDay]+", "+months[thisArbyMonth]+" "+thisArbyDay+", "+formathour(thisArbyHour);tr.children[2].textContent=totit(loc(node.missionName))+" - "+dict[node.factionName]+" @ "+loc(node.name)+", "+loc(node.systemName);if("darkSectorData"in node){tr.children[2].textContent+=" ("+(node.darkSectorData.resourceBonus*100).toFixed(0)+"% resource bonus)";}}}{const tr=document.getElementById("next-type-"+node.missionIndex);if(tr.children[1].innerHTML=="N/A"){tr.removeAttribute("data-starved");tr.children[1].setAttribute("data-timestamp",arr[0]);tr.children[1].textContent=days[thisArbyWeekDay]+","+months[thisArbyMonth]+""+thisArbyDay+","+formathour(thisArbyHour);tr.children[2].textContent=dict[node.factionName]+"@"+loc(node.name)+","+loc(node.systemName);if("darkSectorData"in node){tr.children[2].textContent+="("+(node.darkSectorData.resourceBonus*100).toFixed(0)+"% resource bonus)";}}}{const tr=document.getElementById("next-fc-"+node.factionIndex);if(tr.children[1].innerHTML=="N/A"){tr.removeAttribute("data-starved");tr.children[1].setAttribute("data-timestamp",arr[0]);tr.children[1].textContent=days[thisArbyWeekDay]+", "+months[thisArbyMonth]+" "+thisArbyDay+", "+formathour(thisArbyHour);tr.children[2].textContent=totit(loc(node.missionName))+" - "+loc(node.name)+", "+loc(node.systemName);if("darkSectorData"in node){tr.children[2].textContent+=" ("+(node.darkSectorData.resourceBonus*100).toFixed(0)+"% resource bonus)";}}}}if(!("updater"in window)){window.updater=setInterval(function(){if(window.currentHour!=(parseInt((new Date().getTime()/1000) /3600)*3600)){updateLog()}},1000)}console.timeEnd("updateLog")}function saveSettings(){let hash="days="+encodeURIComponent(document.getElementById("select-days").value)+"&tz="+encodeURIComponent(document.getElementById("select-tz").value)+"&hourfmt="+encodeURIComponent(document.getElementById("select-hourfmt").value);const filtered_away=[];document.querySelectorAll("input[type=checkbox]").forEach(elm=>{if(!elm.checked){filtered_away.push(elm.id.substr(7))}});if(filtered_away.length!=0){hash+="&exclude="+encodeURIComponent(filtered_away.join("."))}location.hash=hash}document.querySelectorAll("select, input[type=checkbox]").forEach(elm=>{elm.onchange=function(){if("arbys"in window){updateLog()}saveSettings()}});</script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script></body></html>
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+	<title>Arbitration Schedule | omni.wf</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!--<link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Arby%27s_logo.svg/1200px-Arby%27s_logo.svg.png">-->
+	<link rel="icon" href="https://browse.wf/Lotus/Interface/Icons/Categories/GrimoireModIcon.png">
+	<style>
+		#log h3:not(:first-child)
+		{
+			margin-top: 1rem;
+		}
+
+		#log span, #log b
+		{
+			display: block;
+			margin-bottom: 1px;
+		}
+	</style>
+</head>
+<body data-bs-theme="dark">
+	<nav class="navbar navbar-expand-md bg-body-tertiary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Warframe Omni Tool</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar-content">
+				<div class="navbar-nav me-auto mb-2 mb-md-0">
+					<a class="nav-link active" aria-current="page" href="#" onclick="event.preventDefault();">Arbitration Schedule</a>
+					<a class="nav-link" href="/rivencalc">Riven Calculator</a>
+					<a class="nav-link" href="/glyphs">Glyphs</a>
+				</div>
+				<div class="nav-item dropdown mb-2 mb-md-0">
+					<a id="lang-dropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">English</a>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><a class="dropdown-item active" href="#" data-lang="en" onclick="event.preventDefault();setLanguage('en');">English</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="de" onclick="event.preventDefault();setLanguage('de');">Deutsch</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="es" onclick="event.preventDefault();setLanguage('es');">Español</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="fr" onclick="event.preventDefault();setLanguage('fr');">Français</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="it" onclick="event.preventDefault();setLanguage('it');">Italiano</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="ja" onclick="event.preventDefault();setLanguage('ja');">日本語</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="ko" onclick="event.preventDefault();setLanguage('ko');">한국어</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="pl" onclick="event.preventDefault();setLanguage('pl');">Polski</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="pt" onclick="event.preventDefault();setLanguage('pt');">Português</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="ru" onclick="event.preventDefault();setLanguage('ru');">Русский</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="tr" onclick="event.preventDefault();setLanguage('tr');">Türkçe</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="uk" onclick="event.preventDefault();setLanguage('uk');">Українська</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="zh" onclick="event.preventDefault();setLanguage('zh');">简体中文</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="tc" onclick="event.preventDefault();setLanguage('tc');">繁體中文</a></li>
+						<li><a class="dropdown-item" href="#" data-lang="th" onclick="event.preventDefault();setLanguage('th');">แบบไทย</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="p-3">
+		<p>
+			The next <select id="select-days">
+				<option value="1">24 hours</option>
+				<option value="7">7 days</option>
+				<option value="30" selected>30 days</option>
+				<option value="90">90 days</option>
+				<option value="365">12 months</option>
+				<option value="9999999999">eon</option>
+			</select> of arbitrations, in <select id="select-tz">
+				<option id="local-time-option" value="local">local time</option>
+				<option value="zulu">universal time (UTC+0)</option>
+			</select>, using <select id="select-hourfmt">
+				<option value="mil">military time</option>
+				<option value="24">24-hour time</option>
+				<option value="12">12-hour time</option>
+			</select>.
+		</p>
+		<div class="row">
+			<div id="log" class="col-xl-6 mb-3">
+				<p>Loading, please wait...</p>
+			</div>
+			<div class="col-xl-6">
+				<table class="table">
+					<thead>
+						<td></td>
+						<th colspan="2">Next Occurrence</th>
+					</thead>
+					<tbody>
+						<tr id="next-type-2"><th><input id="filter-type-2" type="checkbox" class="form-check-input" checked /> <label for="filter-type-2">Survival</label></th><td></td><td></td></tr>
+						<tr id="next-type-8"><th><input id="filter-type-8" type="checkbox" class="form-check-input" checked /> <label for="filter-type-8">Defense</label></th><td></td><td></td></tr>
+						<tr id="next-type-13"><th><input id="filter-type-13" type="checkbox" class="form-check-input" checked /> <label for="filter-type-13">Interception</label></th><td></td><td></td></tr>
+						<tr id="next-type-17"><th><input id="filter-type-17" type="checkbox" class="form-check-input" checked /> <label for="filter-type-17">Excavation</label></th><td></td><td></td></tr>
+						<tr id="next-type-21"><th><input id="filter-type-21" type="checkbox" class="form-check-input" checked /> <label for="filter-type-21">Infested Salvage</label></th><td></td><td></td></tr>
+						<tr id="next-type-27"><th><input id="filter-type-27" type="checkbox" class="form-check-input" checked /> <label for="filter-type-27">Defection</label></th><td></td><td></td></tr>
+						<tr id="next-type-33"><th><input id="filter-type-33" type="checkbox" class="form-check-input" checked /> <label for="filter-type-33">Disruption</label></th><td></td><td></td></tr>
+						<tr id="next-tier-S"><th><input id="filter-tier-S" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-S">S Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-A"><th><input id="filter-tier-A" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-A">A Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-B"><th><input id="filter-tier-B" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-B">B Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-C"><th><input id="filter-tier-C" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-C">C Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-D"><th><input id="filter-tier-D" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-D">D Tier</label></th><td></td><td></td></tr>
+						<tr id="next-tier-F"><th><input id="filter-tier-F" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-F">F Tier</label></th><td></td><td></td></tr>
+						<tr id="next-fc-0"><th><input id="filter-fc-0" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-0">Grineer</label></th><td></td><td></td></tr>
+						<tr id="next-fc-1"><th><input id="filter-fc-1" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-1">Corpus</label></th><td></td><td></td></tr>
+						<tr id="next-fc-2"><th><input id="filter-fc-2" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-2">Infested</label></th><td></td><td></td></tr>
+						<tr id="next-fc-3"><th><input id="filter-fc-3" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-3">Corrupted</label></th><td></td><td></td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="common.js"></script>
+	<script>
+		const days = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ];
+		const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+		// Credit to the Arbitration Goons for these tiers.
+		const tiers = {
+			ClanNode24: "A",
+			SolNode195: "A",
+			SolNode224: "A",
+			SolNode42: "A",
+			SolNode211: "B",
+			SolNode22: "B",
+			SolNode707: "B",
+			SolNode72: "B",
+			ClanNode15: "C",
+			ClanNode4: "C",
+			ClanNode6: "C",
+			SettlementNode11: "C",
+			SolNode106: "C",
+			SolNode122: "C",
+			SolNode125: "C",
+			SolNode130: "C",
+			SolNode164: "C",
+			SolNode212: "C",
+			SolNode25: "C",
+			SolNode26: "C",
+			SolNode43: "C",
+			SolNode46: "C",
+			SolNode64: "C",
+			ClanNode0: "D",
+			ClanNode18: "D",
+			ClanNode2: "D",
+			ClanNode8: "D",
+			SolNode167: "D",
+			SolNode172: "D",
+			SolNode17: "D",
+			SolNode185: "D",
+			SolNode18: "D",
+			SolNode23: "D",
+			SolNode305: "D",
+			SolNode402: "D",
+			SolNode412: "D",
+			SolNode85: "D",
+			SolNode907: "D",
+			ClanNode22: "S",
+			SolNode147: "S",
+			SolNode149: "S",
+		};
+
+		function loc(key)
+		{
+			return dict[key] ?? key;
+		}
+
+		function totwo(num)
+		{
+			if (num < 10)
+			{
+				return "0" + num;
+			}
+			return num;
+		}
+
+		function totit(str)
+		{
+			return str.replace(/\S+/g, word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase());
+		}
+
+		function formattz(offset)
+		{
+			if (offset == 0)
+			{
+				return "UTC+0";
+			}
+			offset /= 60;
+			if (offset < 0)
+			{
+				return "UTC+" + (offset * -1);
+			}
+			return "UTC-" + offset;
+		}
+		document.getElementById("local-time-option").textContent += " (" + formattz(new Date().getTimezoneOffset()) + ")";
+
+		function formathour(hour)
+		{
+			switch (document.getElementById("select-hourfmt").value)
+			{
+			case "mil": default: // This is the default because it indicates when zulu time is used, making it easier to parse screenshots of the schedule.
+				return totwo(hour) + "00" + (document.getElementById("select-tz").value == "zulu" ? "Z" : "");
+
+			case "24":
+				return totwo(hour) + ":00";
+
+			case "12":
+				return ((hour % 12) == 0 ? "12" : (hour % 12)) + (hour >= 12 ? "pm" : "am");
+			}
+		}
+
+		const params = new URLSearchParams(location.hash.replace("#", ""));
+		if (params.has("days"))
+		{
+			document.getElementById("select-days").value = params.get("days");
+		}
+		else if ("userAgentData" in navigator && navigator.userAgentData.mobile)
+		{
+			document.getElementById("select-days").value = 1;
+		}
+		if (params.has("tz"))
+		{
+			document.getElementById("select-tz").value = params.get("tz");
+		}
+		if (params.has("hourfmt"))
+		{
+			document.getElementById("select-hourfmt").value = params.get("hourfmt");
+		}
+		if (params.has("exclude"))
+		{
+			params.get("exclude").split(".").forEach(opt =>
+			{
+				const checkbox = document.getElementById("filter-" + opt);
+				if (checkbox)
+				{
+					checkbox.checked = false;
+				}
+			});
+		}
+
+		Promise.all([
+			getDictPromise(),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
+			fetch("https://browse.wf/arbys.txt").then(res => res.text())
+		]).then(([ dict, ExportRegions, arbys ]) => {
+			window.dict = dict;
+			window.ExportRegions = ExportRegions;
+			window.arbys = arbys.split("\n").map(line => line.split(",")).filter(arr => arr.length == 2);
+			onLanguageUpdate = function()
+			{
+				updateLog();
+				updateFilterNamesForLocale();
+			};
+			onLanguageUpdate();
+		});
+
+		function updateFilterNamesForLocale()
+		{
+			document.querySelector("label[for=filter-type-2]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Survival"]);
+			document.querySelector("label[for=filter-type-8]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Defense"]);
+			document.querySelector("label[for=filter-type-13]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Territory"]);
+			document.querySelector("label[for=filter-type-17]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Excavation"]);
+			document.querySelector("label[for=filter-type-21]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Purify"]);
+			document.querySelector("label[for=filter-type-27]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Evacuation"]);
+			document.querySelector("label[for=filter-type-33]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Artifact"]);
+
+			document.querySelector("label[for=filter-fc-0]").textContent = dict["/Lotus/Language/Game/Faction_GrineerUC"];
+			document.querySelector("label[for=filter-fc-1]").textContent = dict["/Lotus/Language/Game/Faction_CorpusUC"];
+			document.querySelector("label[for=filter-fc-2]").textContent = dict["/Lotus/Language/Game/Faction_InfestationUC"];
+			document.querySelector("label[for=filter-fc-3]").textContent = dict["/Lotus/Language/Game/Faction_OrokinUC"];
+		}
+
+		function updateLog()
+		{
+			console.time("updateLog");
+
+			const zulu = (document.getElementById("select-tz").value == "zulu");
+
+			window.currentHour = parseInt((new Date().getTime() / 1000) / 3600) * 3600;
+
+			const epochHour = parseInt(arbys[0][0] / 3600) * 3600;
+			const currentHourIndex = (currentHour - epochHour) / 3600;
+
+			// Update log
+			const currentYear = zulu ? new Date().getUTCFullYear() : new Date().getFullYear();
+			let remainingArbys = parseInt(document.getElementById("select-days").value) * 24;
+			let lastArbyDay = -1;
+			document.getElementById("log").innerHTML = "";
+			for (let i = currentHourIndex; i != arbys.length && remainingArbys-- > 0; ++i)
+			{
+				const arr = arbys[i];
+
+				const thisArbyGrade = (tiers[arr[1]] ?? "F");
+				if (!document.getElementById("filter-tier-" + thisArbyGrade).checked)
+				{
+					continue;
+				}
+
+				const node = ExportRegions[arr[1]];
+				if (!document.getElementById("filter-type-" + node.missionIndex).checked
+					|| !document.getElementById("filter-fc-" + node.factionIndex).checked
+					)
+				{
+					continue;
+				}
+
+				const date = new Date(arr[0] * 1000);
+				const thisArbyHour = zulu ? date.getUTCHours() : date.getHours();
+				const thisArbyDay = zulu ? date.getUTCDate() : date.getDate();								
+
+				if (thisArbyDay != lastArbyDay)
+				{
+					lastArbyDay = thisArbyDay;
+					const thisArbyWeekDay = zulu ? date.getUTCDay() : date.getDay();
+					const thisArbyMonth = zulu ? date.getUTCMonth() : date.getMonth();
+					const thisArbyYear = zulu ? date.getUTCFullYear() : date.getFullYear();
+					let h3 = document.createElement("h3");
+					h3.textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay;
+					if (thisArbyYear != currentYear)
+					{
+						h3.textContent += ", " + thisArbyYear;
+					}
+					document.getElementById("log").appendChild(h3);
+				}
+
+				let span = document.createElement(arr[0] == currentHour ? "b" : "span");
+				span.setAttribute("data-timestamp", arr[0]);
+				span.textContent = formathour(thisArbyHour) + " • " + totit(loc(node.missionName)) + " - " + dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName) + " (" + thisArbyGrade + " tier";
+				if ("darkSectorData" in node)
+				{
+					span.textContent += ", " + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus";
+				}
+				span.textContent += ")";
+				document.getElementById("log").appendChild(span);
+			}
+			if (document.getElementById("log").children.length == 0)
+			{
+				let span = document.createElement("span");
+				span.textContent = "I've looked through " + (arbys.length - currentHourIndex) + " arbitrations but not a one matches your filters. :/";
+				document.getElementById("log").appendChild(span);
+			}
+
+			// Update table
+			document.querySelectorAll("table tbody tr").forEach(tr => {
+				tr.setAttribute("data-starved", "true");
+				tr.children[1].innerHTML = "N/A";
+				tr.children[2].innerHTML = "N/A";
+			});
+			for (let i = currentHourIndex; i != arbys.length && document.querySelector("[data-starved]"); ++i)
+			{
+				const arr = arbys[i];
+
+				const date = new Date(arr[0] * 1000);
+				const node = ExportRegions[arr[1]];
+
+				const thisArbyHour = zulu ? date.getUTCHours() : date.getHours();
+				const thisArbyDay = zulu ? date.getUTCDate() : date.getDate();
+				const thisArbyWeekDay = zulu ? date.getUTCDay() : date.getDay();
+				const thisArbyMonth = zulu ? date.getUTCMonth() : date.getMonth();
+
+				const thisArbyGrade = (tiers[arr[1]] ?? "F");
+
+				{
+					const tr = document.getElementById("next-tier-" + thisArbyGrade);
+					if (tr.children[1].innerHTML == "N/A")
+					{
+						tr.removeAttribute("data-starved");
+						tr.children[1].setAttribute("data-timestamp", arr[0]);
+						tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
+						tr.children[2].textContent = totit(loc(node.missionName)) + " - " + dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName);
+						if ("darkSectorData" in node)
+						{
+							tr.children[2].textContent += " (" + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus)";
+						}
+					}
+				}
+				{
+					const tr = document.getElementById("next-type-" + node.missionIndex);
+					if (tr.children[1].innerHTML == "N/A")
+					{
+						tr.removeAttribute("data-starved");
+						tr.children[1].setAttribute("data-timestamp", arr[0]);
+						tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
+						tr.children[2].textContent = dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName);
+						if ("darkSectorData" in node)
+						{
+							tr.children[2].textContent += " (" + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus)";
+						}
+					}
+				}
+				{
+					const tr = document.getElementById("next-fc-" + node.factionIndex);
+					if (tr.children[1].innerHTML == "N/A")
+					{
+						tr.removeAttribute("data-starved");
+						tr.children[1].setAttribute("data-timestamp", arr[0]);
+						tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
+						tr.children[2].textContent = totit(loc(node.missionName)) + " - " + loc(node.name) + ", " + loc(node.systemName);
+						if ("darkSectorData" in node)
+						{
+							tr.children[2].textContent += " (" + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus)";
+						}
+					}
+				}
+			}
+
+			// Ensure data stays up-to-date
+			if (!("updater" in window))
+			{
+				window.updater = setInterval(function()
+				{
+					if (window.currentHour != (parseInt((new Date().getTime() / 1000) / 3600) * 3600))
+					{
+						updateLog();
+					}
+				}, 1000);
+			}
+
+			console.timeEnd("updateLog");
+		}
+
+		function saveSettings()
+		{
+			let hash = "days=" + encodeURIComponent(document.getElementById("select-days").value)
+					+ "&tz=" + encodeURIComponent(document.getElementById("select-tz").value)
+					+ "&hourfmt=" + encodeURIComponent(document.getElementById("select-hourfmt").value)
+					;
+
+			const filtered_away = [];
+			document.querySelectorAll("input[type=checkbox]").forEach(elm =>
+			{
+				if (!elm.checked)
+				{
+					filtered_away.push(elm.id.substr(7)); // "filter-"
+				}
+			});
+			if (filtered_away.length != 0)
+			{
+				hash += "&exclude=" + encodeURIComponent(filtered_away.join("."));
+			}
+
+			location.hash = hash;
+		}
+
+		document.querySelectorAll("select, input[type=checkbox]").forEach(elm =>
+		{
+			elm.onchange = function()
+			{
+				if ("arbys" in window)
+				{
+					updateLog();
+				}
+				saveSettings();
+			};
+		});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
