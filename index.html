@@ -152,25 +152,30 @@
 		function updateMissionDeckNames()
 		{
 			window.missionDeckNames = {
-				"/Lotus/Types/Game/MissionDecks/SortieRewards": "Sortie",
-				"/Lotus/Types/Game/MissionDecks/ArchonSortieRewards": "Archon Hunt",
-				"/Lotus/Types/Game/MissionDecks/EntratiMissionRewards/EntratiVaultRewards": "Netracells",
-				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestArcaneRewards": "Deep Archimedea Arcane Rewards",
-				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestGoldRewards": "Deep Archimedea Gold Rewards",
-				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestSilverRewards": "Deep Archimedea Silver Rewards",
-				"/Lotus/Types/Game/MissionDecks/EndlessExterminationRewards/EndlessExterminationRewardsEasy": "Sanctuary Onslaught",
-				"/Lotus/Types/Game/MissionDecks/EndlessExterminationRewards/EndlessExterminationRewardsHard": "Elite Sanctuary Onslaught",
+				"/Lotus/Types/Game/MissionDecks/SortieRewards": ["Sortie"],
+				"/Lotus/Types/Game/MissionDecks/ArchonSortieRewards": ["Archon Hunt"],
+				"/Lotus/Types/Game/MissionDecks/EntratiMissionRewards/EntratiVaultRewards": ["Netracells"],
+				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestArcaneRewards": ["Deep Archimedea Arcane Rewards"],
+				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestGoldRewards": ["Deep Archimedea Gold Rewards"],
+				"/Lotus/Types/Game/MissionDecks/EntratiLabConquestRewards/EntratiLabConquestSilverRewards": ["Deep Archimedea Silver Rewards"],
+				"/Lotus/Types/Game/MissionDecks/EndlessExterminationRewards/EndlessExterminationRewardsEasy": ["Sanctuary Onslaught"],
+				"/Lotus/Types/Game/MissionDecks/EndlessExterminationRewards/EndlessExterminationRewardsHard": ["Elite Sanctuary Onslaught"],
 			};
 			Object.values(ExportRegions).forEach(region => {
 				region.rewardManifests.forEach(deckName => {
-					window.missionDeckNames[deckName] = dict[region.name] + " (" + dict[region.systemName] + ")";
+					window.missionDeckNames[deckName] ??= [];
+					window.missionDeckNames[deckName].push(dict[region.name] + " (" + dict[region.systemName] + ")");
 				});
 			});
 
 			window.droptableNames = {};
 			Object.values(ExportEnemies.avatars).forEach(avatar => {
 				if (avatar.droptable) {
-					window.droptableNames[avatar.droptable] = dict[avatar.name];
+					window.droptableNames[avatar.droptable] ??= [];
+					if (!window.droptableNames[avatar.droptable].find(name => name == dict[avatar.name]))
+					{
+						window.droptableNames[avatar.droptable].push(dict[avatar.name]);
+					}
 				}
 			});
 		}
@@ -520,7 +525,7 @@
 									if (deckName in missionDeckNames)
 									{
 										sources.push({
-											name: missionDeckNames[deckName] ?? deckName,
+											name: missionDeckNames[deckName] ?? [deckName],
 											rotation: i,
 											itemCount: reward.itemCount,
 											probability: reward.probability
@@ -542,7 +547,7 @@
 								if (reward.type == result.key)
 								{
 									sources.push({
-										name: droptableNames[droptableName] ?? droptableName,
+										name: droptableNames[droptableName] ?? [droptableName],
 										itemCount: 1,
 										probability: reward.probability * pool.chance
 									});
@@ -557,12 +562,34 @@
 						let ul = document.createElement("ul");
 						sources.forEach(source => {
 							let li = document.createElement("li");
-							li.textContent = source.name;
-							if (source.rotation)
+							if (source.name.length == 1)
 							{
-								li.textContent += ", Rotation " + ("ABCD"[source.rotation]);
+								li.textContent = source.name[0];
 							}
-							li.textContent += " gives " + source.itemCount + " @ " + (source.probability * 100).toFixed(2) + "%";
+							else
+							{
+								let abbr = document.createElement("abbr");
+								abbr.textContent = source.name[0];
+								abbr.title = "has the same rewards as: ";
+								for (let i = 1; i != source.name.length; ++i)
+								{
+									if (i != 1)
+									{
+										abbr.title += ", "
+									}
+									abbr.title += source.name[i];
+								}
+								li.appendChild(abbr);
+							}
+							{
+								let span = document.createElement("span");
+								if (source.rotation)
+								{
+									span.textContent += ", Rotation " + ("ABCD"[source.rotation]);
+								}
+								span.textContent += " gives " + source.itemCount + " @ " + (source.probability * 100).toFixed(2) + "%";
+								li.appendChild(span);
+							}
 							ul.appendChild(li);
 						});
 						root.appendChild(ul);
