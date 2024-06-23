@@ -320,6 +320,12 @@
 			const buffs = parseInt(document.getElementById("buffs").value);
 			const curses = parseInt(document.getElementById("curses").value);
 			const mod_data = ExportUpgrades["/Lotus/Upgrades/Mods/Randomized/" + rivenType];
+			let weaponData;
+			if (weaponConfig)
+			{
+				const weaponLocTag = Object.entries(dict).find(x => x[1] == weaponConfig)[0];
+				weaponData = Object.values(ExportWeapons).find(weapon => weapon.name == weaponLocTag);
+			}
 			document.getElementById("buffs-body").innerHTML = "";
 			document.getElementById("curses-body").innerHTML = "";
 			mod_data.upgradeEntries.forEach(upgrade => {
@@ -333,6 +339,7 @@
 						span.innerHTML = dict[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
 						div.appendChild(span);
 					}
+					addStatCompatInfo(div, weaponData, upgrade.tag, true);
 					{
 						let a = document.createElement("a");
 						a.style.textDecoration = "none";
@@ -368,6 +375,7 @@
 						span.innerHTML = dict[upgrade.upgradeValues[0].locTag].replace(/\<DT_\w+\>/, "").split("|STAT1|").join("|val|").split("|val|").join("<b>" + min.displayValue + "</b> to <b>" + max.displayValue + "</b>") + " ";
 						div.appendChild(span);
 					}
+					addStatCompatInfo(div, weaponData, upgrade.tag, false);
 					{
 						let a = document.createElement("a");
 						a.style.textDecoration = "none";
@@ -401,6 +409,66 @@
 			{
 				document.getElementById("hide-if-no-curses").classList.remove("d-none");
 			}
+		}
+
+		const upgradeTagToDamageType = {
+			"WeaponImpactDamageMod": "DT_IMPACT",
+			"WeaponArmorPiercingDamageMod": "DT_PUNCTURE",
+			"WeaponSlashDamageMod": "DT_SLASH",
+			"WeaponElectricityDamageMod": "DT_ELECTRICITY",
+			"WeaponFireDamageMod": "DT_FIRE",
+			"WeaponFreezeDamageMod": "DT_FREEZE",
+			"WeaponToxinDamageMod": "DT_POISON",
+		}
+
+		function addStatCompatInfo(div, weaponData, tag, buff)
+		{
+			let incompatible = false;
+			if (tag == "WeaponProjectileSpeedMod"
+				&& weaponData?.compatibilityTags
+				&& !weaponData.compatibilityTags.find(x => x == "PROJECTILE")
+				)
+			{
+				incompatible = true;
+			}
+			if (tag in upgradeTagToDamageType)
+			{
+				const damageType = upgradeTagToDamageType[tag];
+				if (!weaponHasInnateDamage(weaponData, damageType))
+				{
+					const isPhysical = (damageType == "DT_IMPACT" || damageType == "DT_PUNCTURE" || damageType == "DT_SLASH");
+					if (isPhysical || !buff)
+					{
+						incompatible = true;
+					}
+				}
+			}
+			if (incompatible)
+			{
+				let span = document.createElement("span");
+				span.textContent = "ⓘ";
+				span.className = "text-body-emphasis";
+				span.title = "This stat can currently not be rolled on the selected weapon.";
+				div.appendChild(span);
+
+				span = document.createElement("span");
+				span.textContent = " ";
+				div.appendChild(span);
+			}
+		}
+
+		function weaponHasInnateDamage(weaponData, damageType)
+		{
+			if (weaponData
+				&& weaponData.behaviors
+				&& weaponData.behaviors[0]
+				&& weaponData.behaviors[0].projectile
+				&& weaponData.behaviors[0].projectile.attack
+				)
+			{
+				return (damageType in weaponData.behaviors[0].projectile.attack);
+			}
+			return true;
 		}
 
 		function getBuffValue(rivenType, tag, tagValue, omegaAttenuation, lvl, buffs, curses)
