@@ -513,7 +513,7 @@
 									{
 										sources.push({
 											name: missionDeckNames[deckName] ?? [deckName],
-											rotation: i,
+											rotation: tiers.length > 1 ? i : undefined,
 											itemCount: reward.itemCount,
 											probability: reward.probability
 										});
@@ -571,7 +571,7 @@
 							}
 							{
 								let span = document.createElement("span");
-								if (source.rotation)
+								if (source.rotation !== undefined)
 								{
 									span.textContent += ", Rotation " + ("ABCD"[source.rotation]);
 								}
