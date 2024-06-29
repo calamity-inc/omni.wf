@@ -339,7 +339,7 @@
 							p.textContent = "If the promo code no longer works, ";
 							{
 								let a = document.createElement("a");
-								a.href = "https://github.com/calamity-inc/omni.wf/issues";
+								a.href = "https://github.com/omni-wf/omni.wf/issues";
 								a.target = "_blank";
 								a.textContent = "please let us know.";
 								p.appendChild(a);
@@ -362,7 +362,7 @@
 							p.textContent = "The following information is user-contributed. ";
 							{
 								let a = document.createElement("a");
-								a.href = "https://github.com/calamity-inc/omni.wf/issues";
+								a.href = "https://github.com/omni-wf/omni.wf/issues";
 								a.target = "_blank";
 								a.textContent = "Report issues you find here.";
 								p.appendChild(a);
@@ -463,7 +463,7 @@
 						p.textContent = "If you know how to obtain this glyph, ";
 						{
 							let a = document.createElement("a");
-							a.href = "https://github.com/calamity-inc/omni.wf/issues";
+							a.href = "https://github.com/omni-wf/omni.wf/issues";
 							a.target = "_blank";
 							a.textContent = "please let us know.";
 							p.appendChild(a);
