@@ -384,6 +384,7 @@
 			"ConclaveSyndicate",
 			"EventSyndicate",
 		];
+		const vallisRaceNames = [0, "Puffin’ Pastures", "Bomb the Spaceport", "Shaving Nef", "Anyo’s Ointment", "Grinding the Void", "Fortuna’s Folley", "Taxman’s Curve", "Kubrodon Twist", "Mumsie Dadsie", "Catalyst", "Skeggin’ Out", "Deathgrip", "Dog Line", "River Run", "The Hard Way", "Sky-Eye", "Pobber’s Drop", "Lord of the Board", "Breakdown Or Bust", "Frost Merchant", "Roky’s Roll", "Meat and Greet"];
 
 		function peColourToHex(colour)
 		{
@@ -674,6 +675,10 @@
 									const title = document.createElement("h5");
 									title.className = "card-title";
 									title.textContent = dict[achievement.name] ?? tag;
+									if (tag.substr(0, 14) == "OrbVallisRacer")
+									{
+										title.textContent += " (" + vallisRaceNames[tag.substr(14)] + ")";
+									}
 									body.appendChild(title);
 								}
 								if (achievement.description)
