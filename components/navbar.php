@@ -1,19 +1,20 @@
 <?php
 $ext = empty($_DYNSTAT) ? ".php" : "";
 ?>
-<nav class="navbar navbar-expand-md bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/" <?php if ($_SERVER["REQUEST_URI"] == "/"): ?> onclick="event.preventDefault();" <?php endif; ?>>Warframe Omni Tool</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbar-content">
-			<div class="navbar-nav me-auto mb-2 mb-md-0">
+			<div class="navbar-nav me-auto mb-2 mb-lg-0">
 				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 6) == "/arbys" ? " active" : ""); ?>" href="/arbys<?=$ext;?>">Arbitration Schedule</a>
 				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 10) == "/rivencalc" ? " active" : ""); ?>" href="/rivencalc<?=$ext;?>">Riven Calculator</a>
+				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 8) == "/profile" ? " active" : ""); ?>" href="/profile<?=$ext;?>">Profile Viewer</a>
 				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 7) == "/glyphs" ? " active" : ""); ?>" href="/glyphs<?=$ext;?>">Glyphs</a>
 			</div>
-			<div class="nav-item dropdown mb-2 mb-md-0">
+			<div class="nav-item dropdown mb-2 mb-lg-0">
 				<a id="lang-dropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">English</a>
 				<ul class="dropdown-menu dropdown-menu-end">
 					<li><a class="dropdown-item active" href="#" data-lang="en" onclick="event.preventDefault();setLanguage('en');">English</a></li>
