@@ -705,9 +705,11 @@
 			document.querySelector("#missions tbody").innerHTML = "";
 			Object.keys(ExportRegions).forEach(tag =>
 			{
-				if (!profile.Results[0].Missions.find(x => x.Tag == tag))
+				if (tag != "EventNode763"
+					&& !profile.Results[0].Missions.find(x => x.Tag == tag)
+					)
 				{
-					profile.Results[0].Missions.push({ Tag: tag, Completes :0 });
+					profile.Results[0].Missions.push({ Tag: tag, Completes: 0 });
 				}
 			});
 			profile.Results[0].Missions
