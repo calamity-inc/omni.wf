@@ -385,6 +385,12 @@
 			"EventSyndicate",
 		];
 		const vallisRaceNames = [0, "Puffin’ Pastures", "Bomb the Spaceport", "Shaving Nef", "Anyo’s Ointment", "Grinding the Void", "Fortuna’s Folley", "Taxman’s Curve", "Kubrodon Twist", "Mumsie Dadsie", "Catalyst", "Skeggin’ Out", "Deathgrip", "Dog Line", "River Run", "The Hard Way", "Sky-Eye", "Pobber’s Drop", "Lord of the Board", "Breakdown Or Bust", "Frost Merchant", "Roky’s Roll", "Meat and Greet"];
+		const platformNames = {
+			"pc": "PC",
+			"ps4": "PlayStation",
+			"xb1": "Xbox",
+			"swi": "Switch",
+		};
 
 		function peColourToHex(colour)
 		{
@@ -538,7 +544,7 @@
 			document.querySelector("#status").classList.add("d-none");
 
 			document.getElementById("profile-name").textContent = profile.Results[0].DisplayName;
-			document.getElementById("mr").textContent = "Mastery Rank " + (profile.Results[0].PlayerLevel ?? 0);
+			document.getElementById("mr").textContent = platformNames[profile.platform] + " Account, Mastery Rank " + (profile.Results[0].PlayerLevel ?? 0);
 
 			const accolades = [];
 			if (profile.Results[0].Staff)
