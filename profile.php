@@ -980,9 +980,19 @@
 					document.getElementById(category + "-name").textContent += " (\"" + equipment.ItemName + "\")";
 				}
 
-				for (let i = 0; i != 26; ++i)
+				if (config.Skins)
 				{
-					displaySkin(category, i, config?.Skins[i]);
+					for (let i = 0; i != 26; ++i)
+					{
+						displaySkin(category, i, config?.Skins[i]);
+					}
+				}
+				else
+				{
+					for (let i = 0; i != 26; ++i)
+					{
+						displaySkin(category, i, "");
+					}
 				}
 			
 				for (const section of ["pricol", "attcol", "syancol", "sigcol"])
