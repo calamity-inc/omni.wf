@@ -527,7 +527,7 @@
 				if (data)
 				{
 					window.profile = data;
-					window.hashprefix = "account=" + encodeURIComponent(profile.Results[0].DisplayName) + "&platform=" + document.getElementById("platform").value + "&";
+					window.hashprefix = "account=" + encodeURIComponent(profile.Results[0].DisplayName) + "&platform=" + profile.platform + "&";
 					location.hash = hashprefix + "tab=fashion"; // default tab
 				}
 				else
