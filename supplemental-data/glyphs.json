@@ -2043,5 +2043,14 @@
         "other-site": "https://mixer.com/RealSkeeZy",
         "twitch": "https://twitch.tv/skeez",
         "twitter": "https://twitter.com/xOGxSkeez"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/AvatarImagePrideGlyph": {
+        "promo_code": "PRIDE2024"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImagePhongFu": {
+        "promo_code": "PHONGFU"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageHokuProps": {
+        "promo_code": "HOKUPROPS"
     }
 }
