@@ -980,7 +980,7 @@
 					document.getElementById(category + "-name").textContent += " (\"" + equipment.ItemName + "\")";
 				}
 
-				if (config.Skins)
+				if (config?.Skins)
 				{
 					for (let i = 0; i != 26; ++i)
 					{
