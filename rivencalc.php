@@ -129,6 +129,7 @@
 	<script src="common.js"></script>
 	<script src="https://calamity-inc.github.io/warframe-riven-info/RivenParser.js"></script>
 	<script>
+		let weaponConfig = "LotusRifleRandomModRare:1";
 		Promise.all([
 			getDictPromise(),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
@@ -145,14 +146,18 @@
 			const params = new URLSearchParams(location.hash.replace("#", ""));
 			if (params.has("weapon"))
 			{
-				let weapon = params.get("weapon");
-				weaponConfig = weapon;
-				if (weapon.indexOf(":") == -1)
+				weaponConfig = params.get("weapon");
+				if (weaponConfig.indexOf(":") == -1)
 				{
-					document.getElementById("weapon-name").value = weapon;
-					weapon = getValue(document.getElementById("weapon-name")) ?? "LotusRifleRandomModRare:1";
+					document.getElementById("weapon-name").value = weaponConfig;
+					weaponConfig = getValue(document.getElementById("weapon-name"));
+					if (!weaponConfig)
+					{
+						weaponConfig = "LotusRifleRandomModRare:1";
+						document.getElementById("weapon-name").value = "";
+					}
 				}
-				const [rivenType, omegaAttenuation] = weapon.split(":");
+				const [rivenType, omegaAttenuation] = weaponConfig.split(":");
 				document.getElementById("riven-type").value = rivenType;
 				document.getElementById("omega-attenuation").value = omegaAttenuation;
 			}
@@ -288,12 +293,7 @@
 			const buffs = parseInt(document.getElementById("buffs").value);
 			const curses = parseInt(document.getElementById("curses").value);
 			const mod_data = ExportUpgrades["/Lotus/Upgrades/Mods/Randomized/" + rivenType];
-			let weaponData;
-			if (window.weaponConfig)
-			{
-				const weaponLocTag = Object.entries(dict).find(x => x[1] == weaponConfig)[0];
-				weaponData = Object.values(ExportWeapons).find(weapon => weapon.name == weaponLocTag);
-			}
+			const weaponData = Object.values(ExportWeapons).find(weapon => (dict[weapon.name] ?? weapon.name) == weaponConfig);
 			document.getElementById("buffs-body").innerHTML = "";
 			document.getElementById("curses-body").innerHTML = "";
 			mod_data.upgradeEntries.forEach(upgrade => {
@@ -482,10 +482,7 @@
 
 		function saveSettings()
 		{
-			if ("weaponConfig" in window)
-			{
-				location.hash = "weapon=" + encodeURIComponent(window.weaponConfig) + "&lvl=" + document.getElementById("lvl").value + "&buffs=" + document.getElementById("buffs").value + "&curses=" + document.getElementById("curses").value;
-			}
+			location.hash = "weapon=" + encodeURIComponent(weaponConfig) + "&lvl=" + document.getElementById("lvl").value + "&buffs=" + document.getElementById("buffs").value + "&curses=" + document.getElementById("curses").value;
 		}
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
