@@ -8,14 +8,14 @@ if (this_page_nav_link)
 
 function getDictPromise()
 {
-	return fetch("https://raw.wfdata.io/warframe-public-export-plus/dict." + (localStorage.getItem("lang") ?? "en") + ".json").then(res => res.json());
+	return fetch("https://browse.wf/warframe-public-export-plus/dict." + (localStorage.getItem("lang") ?? "en") + ".json").then(res => res.json());
 }
 
 function setLanguage(code)
 {
 	setLanguageIndicator(code);
 
-	fetch("https://raw.wfdata.io/warframe-public-export-plus/dict." + code + ".json").then(res => res.json()).then(function(dict)
+	fetch("https://browse.wf/warframe-public-export-plus/dict." + code + ".json").then(res => res.json()).then(function(dict)
 	{
 		window.dict = dict;
 		if ("onLanguageUpdate" in window)
@@ -48,7 +48,7 @@ function resolveTextIcons(text)
 		const name = match.split("<").join("").split(">").join("");
 		if (ExportTextIcons[name]?.DIT_AUTO)
 		{
-			return "<img alt='<" + name + ">' style='height:1em;position:relative;bottom:2px' src='https://raw.wfdata.io" + ExportTextIcons[name].DIT_AUTO + "' />";
+			return "<img alt='<" + name + ">' style='height:1em;position:relative;bottom:2px' src='https://browse.wf" + ExportTextIcons[name].DIT_AUTO + "' />";
 		}
 		//console.warn("Failed to resolve text icon:", name);
 		return "&lt;" + name + "&gt;";
