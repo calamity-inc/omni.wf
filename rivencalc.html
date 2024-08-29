@@ -477,6 +477,10 @@
 
 		function weaponCanRollDamageType(weaponData, damageType)
 		{
+			if (!weaponData.behaviors)
+			{
+				return true;
+			}
 			const behavior = weaponData.behaviors[0];
 			const damageTable = behavior.projectile?.attack ? behavior.projectile.attack : behavior.impact;
 			if (damageType in damageTable)
