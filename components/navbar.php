@@ -14,12 +14,14 @@ $ext = empty($_DYNSTAT) ? ".php" : "";
 				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 8) == "/profile" ? " active" : ""); ?>" href="/profile<?=$ext;?>">Profile Viewer</a>
 				<?php if (true): ?>
 				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 7) == "/glyphs" ? " active" : ""); ?>" href="/glyphs<?=$ext;?>">Glyphs</a>
+				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 12) == "/prime-vault" ? " active" : ""); ?>" href="/prime-vault<?=$ext;?>">Prime Vault</a>
 				<a class="nav-link<?=(substr($_SERVER["REQUEST_URI"], 0, 11) == "/text-icons" ? " active" : ""); ?>" href="/text-icons<?=$ext;?>">Text Icons</a>
 				<?php else: ?>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle <?=((substr($_SERVER["REQUEST_URI"], 0, 7) == "/glyphs" || substr($_SERVER["REQUEST_URI"], 0, 11) == "/text-icons") ? " active" : ""); ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Misc</a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item <?=(substr($_SERVER["REQUEST_URI"], 0, 7) == "/glyphs" ? " active" : ""); ?>" href="/glyphs<?=$ext;?>">Glyphs</a></li>
+						<li><a class="dropdown-item <?=(substr($_SERVER["REQUEST_URI"], 0, 12) == "/prime-vault" ? " active" : ""); ?>" href="/prime-vault<?=$ext;?>">Prime Vault</a></li>
 						<li><a class="dropdown-item <?=(substr($_SERVER["REQUEST_URI"], 0, 11) == "/text-icons" ? " active" : ""); ?>" href="/text-icons<?=$ext;?>">Text Icons</a></li>
 					</ul>
 				</li>
