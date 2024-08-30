@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+	<title>Prime Vault | wfdata.io</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="icon" href="https://browse.wf/Lotus/Interface/Icons/Categories/GrimoireModIcon.png">
+	<style id="scale-style">.icon{height:1em}</style>
+</head>
+<body data-bs-theme="dark">
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/" >wfdata.io</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbar-content">
+			<div class="navbar-nav me-auto mb-2 mb-lg-0">
+				<a class="nav-link" href="/arbys">Arbitration Schedule</a>
+				<a class="nav-link" href="/rivencalc">Riven Calculator</a>
+				<a class="nav-link" href="/profile">Profile Viewer</a>
+								<a class="nav-link" href="/glyphs">Glyphs</a>
+				<a class="nav-link active" href="/prime-vault">Prime Vault</a>
+				<a class="nav-link" href="/text-icons">Text Icons</a>
+							</div>
+			<div class="nav-item dropdown mb-2 mb-lg-0">
+				<a id="lang-dropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">English</a>
+				<ul class="dropdown-menu dropdown-menu-end">
+					<li><a class="dropdown-item active" href="#" data-lang="en" onclick="event.preventDefault();setLanguage('en');">English</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="de" onclick="event.preventDefault();setLanguage('de');">Deutsch</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="es" onclick="event.preventDefault();setLanguage('es');">Español</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="fr" onclick="event.preventDefault();setLanguage('fr');">Français</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="it" onclick="event.preventDefault();setLanguage('it');">Italiano</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="ja" onclick="event.preventDefault();setLanguage('ja');">日本語</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="ko" onclick="event.preventDefault();setLanguage('ko');">한국어</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="pl" onclick="event.preventDefault();setLanguage('pl');">Polski</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="pt" onclick="event.preventDefault();setLanguage('pt');">Português</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="ru" onclick="event.preventDefault();setLanguage('ru');">Русский</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="tr" onclick="event.preventDefault();setLanguage('tr');">Türkçe</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="uk" onclick="event.preventDefault();setLanguage('uk');">Українська</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="zh" onclick="event.preventDefault();setLanguage('zh');">简体中文</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="tc" onclick="event.preventDefault();setLanguage('tc');">繁體中文</a></li>
+					<li><a class="dropdown-item" href="#" data-lang="th" onclick="event.preventDefault();setLanguage('th');">แบบไทย</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>	<div class="container pt-3">
+		<h3>In Rotation</h3>
+		<ul id="inrotation"></ul>
+		<h3>Prime Resurgence</h3>
+		<ul id="resurgence"></ul>
+		<h3>Vaulted</h3>
+		<ul id="vaulted"></ul>
+	</div>
+	<script src="common.js"></script>
+	<script>
+		const STATE_VAULTED = 0;
+		const STATE_RESURGENCE = 1;
+		const STATE_INROTATION = 2;
+
+		Promise.all([
+			getDictPromise(),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRelics.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportRecipes.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
+			fetch("https://raw.githubusercontent.com/calamity-inc/warframe-worldstate-history/senpai/worldState.json").then(res => res.json()),
+			]).then(function([ dict, ExportRelics, ExportRewards, ExportRecipes, ExportWeapons, ExportWarframes, ExportSentinels, worldState ])
+		{
+			window.dict = dict;
+			window.ExportRelics = ExportRelics;
+			window.ExportRewards = ExportRewards;
+			window.ExportWeapons = ExportWeapons;
+			window.ExportWarframes = ExportWarframes;
+			window.ExportSentinels = ExportSentinels;
+
+			console.time("build component_to_item");
+			window.component_to_item = {};
+			for (const [type, recipe] of Object.entries(ExportRecipes))
+			{
+				component_to_item[type] = recipe.resultType;
+				for (const ingredient of recipe.ingredients)
+				{
+					component_to_item[ingredient.ItemType] = recipe.resultType;
+				}
+			}
+			console.timeEnd("build component_to_item");
+
+			console.time("build VarziaItems");
+			window.VarziaItems = {};
+			for (const offering of worldState.PrimeVaultTraders[0].Manifest)
+			{
+				VarziaItems[offering.ItemType.split("/Lotus/StoreItems/").join("/Lotus/")] = true;
+			}
+			console.timeEnd("build VarziaItems");
+
+			console.time("build MissionRewards");
+			window.MissionRewards = {};
+			for (const deck of Object.values(ExportRewards))
+			{
+				for (const tier of deck)
+				{
+					for (const reward of tier)
+					{
+						MissionRewards[reward.type.split("/Lotus/StoreItems/").join("/Lotus/")] = true;
+					}
+				}
+			}
+			console.timeEnd("build MissionRewards");
+
+			console.time("build items");
+			window.items = {};
+			for (const [type, relic] of Object.entries(ExportRelics))
+			{
+				if (relic.quality == "VPQ_BRONZE" && relic.era != "Requiem")
+				{
+					const state = type in MissionRewards
+									? STATE_INROTATION
+									: type in VarziaItems
+										? STATE_RESURGENCE
+										: STATE_VAULTED
+									;
+					for (const reward of ExportRewards[relic.rewardManifest][0])
+					{
+						if (reward.type != "/Lotus/StoreItems/Types/Recipes/Components/FormaBlueprint")
+						{
+							const item = component_to_item[reward.type.split("/Lotus/StoreItems/").join("/Lotus/")];
+							if (!items[item] || state > items[item])
+							{
+								items[item] = state;
+							}
+						}
+					}
+				}
+			}
+			console.timeEnd("build items");
+
+			updateList();
+			onLanguageUpdate = updateList;
+		});
+
+		function updateList()
+		{
+			const state_to_elm = {};
+			state_to_elm[STATE_VAULTED] = document.getElementById("vaulted");
+			state_to_elm[STATE_RESURGENCE] = document.getElementById("resurgence");
+			state_to_elm[STATE_INROTATION] = document.getElementById("inrotation");
+			for (const div of Object.values(state_to_elm))
+			{
+				div.innerHTML = "";
+			}
+			for (const [item, state] of Object.entries(items))
+			{
+				const name = dict[ExportWarframes[item]?.name] ?? dict[ExportWeapons[item]?.name] ?? dict[ExportSentinels[item]?.name];
+				if (name)
+				{
+					const li = document.createElement("li");
+					li.textContent = name.split("<ARCHWING>").join("");
+					state_to_elm[state].appendChild(li);
+				}
+				else
+				{
+					console.info("discarding", item);
+				}
+			}
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
