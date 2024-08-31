@@ -116,40 +116,44 @@
 			{
 				div.innerHTML = "";
 			}
+			let names = [];
 			for (const [item, state] of Object.entries(items))
 			{
-				let name = dict[ExportWarframes[item]?.name] ?? dict[ExportWeapons[item]?.name] ?? dict[ExportSentinels[item]?.name];
+				const name = dict[ExportWarframes[item]?.name] ?? dict[ExportWeapons[item]?.name] ?? dict[ExportSentinels[item]?.name];
 				if (name)
 				{
-					name = name.split("<ARCHWING>").join("");
-
-					const li = document.createElement("li");
-					li.textContent = name + " ";
-					{
-						const a = document.createElement("a");
-						a.textContent = "(Wiki)";
-						a.href = "https://warframe.fandom.com/wiki/" + encodeURIComponent(name);
-						a.target = "_blank";
-						li.appendChild(a);
-					}
-					{
-						const span = document.createElement("span");
-						span.textContent = " ";
-						li.appendChild(span);
-					}
-					{
-						const a = document.createElement("a");
-						a.textContent = "(omni.wf)";
-						a.href = "/#q=" + encodeURIComponent(name);
-						a.target = "_blank";
-						li.appendChild(a);
-					}
-					state_to_elm[state].appendChild(li);
+					names.push([ name.split("<ARCHWING>").join("").trim(), state ]);
 				}
 				else
 				{
 					console.info("discarding", item);
 				}
+			}
+			names = names.sort((a, b) => a[0].localeCompare(b[0]));
+			for (const [name, state] of names)
+			{
+				const li = document.createElement("li");
+				li.textContent = name + " ";
+				{
+					const a = document.createElement("a");
+					a.textContent = "(Wiki)";
+					a.href = "https://warframe.fandom.com/wiki/" + encodeURIComponent(name);
+					a.target = "_blank";
+					li.appendChild(a);
+				}
+				{
+					const span = document.createElement("span");
+					span.textContent = " ";
+					li.appendChild(span);
+				}
+				{
+					const a = document.createElement("a");
+					a.textContent = "(omni.wf)";
+					a.href = "/#q=" + encodeURIComponent(name);
+					a.target = "_blank";
+					li.appendChild(a);
+				}
+				state_to_elm[state].appendChild(li);
 			}
 		}
 	</script>
