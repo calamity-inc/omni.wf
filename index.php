@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
 <head>
-	<title>wfdata.io</title>
+	<title>Warframe Omni Tool</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="icon" href="https://browse.wf/Lotus/Interface/Icons/Categories/GrimoireModIcon.png">
@@ -339,7 +339,7 @@
 							p.textContent = "If the promo code no longer works, ";
 							{
 								let a = document.createElement("a");
-								a.href = "https://github.com/calamity-inc/wfdata.io/issues";
+								a.href = "https://github.com/calamity-inc/omni.wf/issues";
 								a.target = "_blank";
 								a.textContent = "please let us know.";
 								p.appendChild(a);
@@ -362,7 +362,7 @@
 							p.textContent = "The following information is user-contributed. ";
 							{
 								let a = document.createElement("a");
-								a.href = "https://github.com/calamity-inc/wfdata.io/issues";
+								a.href = "https://github.com/calamity-inc/omni.wf/issues";
 								a.target = "_blank";
 								a.textContent = "Report issues you find here.";
 								p.appendChild(a);
@@ -463,7 +463,7 @@
 						p.textContent = "If you know how to obtain this glyph, ";
 						{
 							let a = document.createElement("a");
-							a.href = "https://github.com/calamity-inc/wfdata.io/issues";
+							a.href = "https://github.com/calamity-inc/omni.wf/issues";
 							a.target = "_blank";
 							a.textContent = "please let us know.";
 							p.appendChild(a);
