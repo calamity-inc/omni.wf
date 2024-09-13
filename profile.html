@@ -1023,7 +1023,10 @@
 				document.getElementById(category + "-name").textContent = (dict[ExportWarframes[equipment.ItemType]?.name] ?? dict[ExportWeapons[equipment.ItemType]?.name] ?? equipment.ItemType);
 				if (equipment.ItemName && equipment.ItemName != document.getElementById(category + "-name").textContent)
 				{
-					document.getElementById(category + "-name").textContent += " (\"" + equipment.ItemName + "\")";
+					if (equipment.ItemName.indexOf("|") === -1) // e.g. for a stock Tenet Arca Plasmor, the ItemName would be "/Lotus/Language/Weapons/CrpBEArcaPlasmorName|PARVI LISSIDPHA" with the respective Lich/Sister name.
+					{
+						document.getElementById(category + "-name").textContent += " (\"" + equipment.ItemName + "\")";
+					}
 				}
 
 				if (config?.Skins)
