@@ -345,7 +345,7 @@
 			"EntratiLabSyndicate",
 
 			"KahlSyndicate",
-			"RadioLegionIntermission10Syndicate",
+			"NIGHTWAVE",
 			"LibrarySyndicate",
 			"ConclaveSyndicate",
 			"EventSyndicate",
@@ -434,6 +434,7 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportNightwave.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportSyndicates.json").then(res => res.json()),
@@ -446,6 +447,7 @@
 				ExportCustoms,
 				ExportEnemies,
 				ExportFlavour,
+				ExportNightwave,
 				ExportRegions,
 				ExportSentinels,
 				ExportSyndicates,
@@ -466,6 +468,14 @@
 			window.ExportWeapons = ExportWeapons;
 			window.profile = profile;
 			//window.profile = { Results: [ { DisplayName: "asdasdasd", Created: { $date: { $numberLong: "1364064293561" } } } ] };
+
+			for (let i = 0; i != syndicateTags.length; ++i)
+			{
+				if (syndicateTags[i] == "NIGHTWAVE")
+				{
+					syndicateTags[i] = ExportNightwave.affiliationTag;
+				}
+			}
 
 			document.getElementById("profile-nav").classList.remove("d-none");
 			activateTab(params.has("tab") ? params.get("tab") : "fashion"); // default tab
