@@ -102,12 +102,12 @@
 			{
 				if (this.value == "")
 				{
-					location.hash = "";
+					history.replaceState({}, undefined, "/");
 					document.getElementById("results").innerHTML = "";
 				}
 				else
 				{
-					location.hash = "q=" + encodeURIComponent(this.value);
+					history.replaceState({}, undefined, "/#q=" + encodeURIComponent(this.value));
 					doQuery(this.value);
 				}
 			};
