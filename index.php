@@ -46,6 +46,7 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportGear.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
@@ -62,6 +63,7 @@
 				ExportFlavour,
 				ExportCustoms,
 				ExportGear,
+				ExportSentinels,
 				ExportRewards,
 				ExportRegions,
 				ExportEnemies,
@@ -80,6 +82,7 @@
 			window.ExportFlavour_entries = Object.entries(ExportFlavour);
 			window.ExportCustoms_entries = Object.entries(ExportCustoms);
 			window.ExportGear_entries = Object.entries(ExportGear);
+			window.ExportSentinels_entries = Object.entries(ExportSentinels)
 			window.ExportRewards_entries = Object.entries(ExportRewards);
 			window.ExportRegions = ExportRegions;
 			window.ExportEnemies = ExportEnemies;
@@ -493,6 +496,7 @@
 					|| result.type == "upgrade"
 					|| result.type == "arcane"
 					|| result.type == "resource"
+					|| result.type == "sentinel"
 					)
 				{
 					const dropType = itemToRecipeMap[result.key] ?? result.key;
@@ -663,6 +667,11 @@
 					{
 						res.push({ type: "gear", key: entry[0], value: entry[1] });
 						continue;
+					}
+					entry = ExportSentinels_entries.find(([uniqueName, item]) => item.name == result.key);
+					if (entry)
+					{
+						res.push({ type: "sentinel", key: entry[0], value: entry[1] });
 					}
 				}
 				res.push(result);
