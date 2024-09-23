@@ -672,6 +672,7 @@
 					if (entry)
 					{
 						res.push({ type: "sentinel", key: entry[0], value: entry[1] });
+						continue;
 					}
 				}
 				res.push(result);
