@@ -57,6 +57,10 @@
 						<tr id="next-type-21"><th><input id="filter-type-21" type="checkbox" class="form-check-input" checked /> <label for="filter-type-21">Infested Salvage</label></th><td></td><td></td></tr>
 						<tr id="next-type-27"><th><input id="filter-type-27" type="checkbox" class="form-check-input" checked /> <label for="filter-type-27">Defection</label></th><td></td><td></td></tr>
 						<tr id="next-type-33"><th><input id="filter-type-33" type="checkbox" class="form-check-input" checked /> <label for="filter-type-33">Disruption</label></th><td></td><td></td></tr>
+						<tr id="next-type-34"><th><input id="filter-type-34" type="checkbox" class="form-check-input" checked /> <label for="filter-type-34">Void Flood</label></th><td></td><td></td></tr>
+						<tr id="next-type-35"><th><input id="filter-type-35" type="checkbox" class="form-check-input" checked /> <label for="filter-type-35">Void Cascade</label></th><td></td><td></td></tr>
+						<tr id="next-type-36"><th><input id="filter-type-36" type="checkbox" class="form-check-input" checked /> <label for="filter-type-36">Void Armageddon</label></th><td></td><td></td></tr>
+						<tr id="next-type-38"><th><input id="filter-type-38" type="checkbox" class="form-check-input" checked /> <label for="filter-type-38">Alchemy</label></th><td></td><td></td></tr>
 						<tr id="next-tier-S"><th><input id="filter-tier-S" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-S">S Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-A"><th><input id="filter-tier-A" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-A">A Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-B"><th><input id="filter-tier-B" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-B">B Tier</label></th><td></td><td></td></tr>
@@ -67,6 +71,7 @@
 						<tr id="next-fc-1"><th><input id="filter-fc-1" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-1">Corpus</label></th><td></td><td></td></tr>
 						<tr id="next-fc-2"><th><input id="filter-fc-2" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-2">Infested</label></th><td></td><td></td></tr>
 						<tr id="next-fc-3"><th><input id="filter-fc-3" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-3">Corrupted</label></th><td></td><td></td></tr>
+						<tr id="next-fc-7"><th><input id="filter-fc-7" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-7">The Murmur</label></th><td></td><td></td></tr>
 					</tbody>
 				</table>
 			</div>
@@ -225,11 +230,16 @@
 			document.querySelector("label[for=filter-type-21]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Purify"]);
 			document.querySelector("label[for=filter-type-27]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Evacuation"]);
 			document.querySelector("label[for=filter-type-33]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Artifact"]);
+			document.querySelector("label[for=filter-type-34]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Corruption"]);
+			document.querySelector("label[for=filter-type-35]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_VoidCascade"]);
+			document.querySelector("label[for=filter-type-36]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Armageddon"]);
+			document.querySelector("label[for=filter-type-38]").textContent = totit(dict["/Lotus/Language/Missions/MissionName_Alchemy"]);
 
 			document.querySelector("label[for=filter-fc-0]").textContent = dict["/Lotus/Language/Game/Faction_GrineerUC"];
 			document.querySelector("label[for=filter-fc-1]").textContent = dict["/Lotus/Language/Game/Faction_CorpusUC"];
 			document.querySelector("label[for=filter-fc-2]").textContent = dict["/Lotus/Language/Game/Faction_InfestationUC"];
 			document.querySelector("label[for=filter-fc-3]").textContent = dict["/Lotus/Language/Game/Faction_OrokinUC"];
+			document.querySelector("label[for=filter-fc-7]").textContent = dict["/Lotus/Language/Game/Faction_MITW"];
 		}
 
 		function updateLog()
