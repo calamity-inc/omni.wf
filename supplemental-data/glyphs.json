@@ -2052,5 +2052,38 @@
     },
     "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageHokuProps": {
         "promo_code": "HOKUPROPS"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImagedeathma666ot": {
+        "promo_code": "DEATHMAGGOT"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageNelosart": {
+        "promo_code": "NELOSART"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageKirdy": {
+        "promo_code": "KIRDY"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImagekyaii": {
+        "promo_code": "KYAII"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageSilvervale": {
+        "promo_code": "SILVERVALE"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageVashka": {
+        "promo_code": "VASHKA"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageWarframeFlo": {
+        "promo_code": "WARFRAMEFLO"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageDarikaArt": {
+        "promo_code": "DARIKAART"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageRetroAlchemist": {
+        "promo_code": "RETROALCHEMIST"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageRIKENZ": {
+        "promo_code": "RIKENZ"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageOttofyre": {
+        "promo_code": "OTTOFYRE"
     }
 }
