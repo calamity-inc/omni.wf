@@ -74,6 +74,21 @@
 		{
 			window.dict = dict;
 			window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
+			window.ExportWarframes = ExportWarframes;
+			window.ExportWeapons = ExportWeapons;
+			window.ExportUpgrades = ExportUpgrades;
+			window.ExportArcanes = ExportArcanes;
+			window.ExportResources = ExportResources;
+			window.ExportFlavour = ExportFlavour;
+			window.ExportCustoms = ExportCustoms;
+			window.ExportGear = ExportGear;
+			window.ExportSentinels = ExportSentinels
+			window.ExportRewards = ExportRewards;
+			window.ExportRegions = ExportRegions;
+			window.ExportEnemies = ExportEnemies;
+			window.ExportTextIcons = ExportTextIcons;
+			window.supplementalGlyphData = supplementalGlyphData;
+
 			window.ExportWarframes_entries = Object.entries(ExportWarframes);
 			window.ExportWeapons_entries = Object.entries(ExportWeapons);
 			window.ExportUpgrades_entries = Object.entries(ExportUpgrades);
@@ -84,10 +99,6 @@
 			window.ExportGear_entries = Object.entries(ExportGear);
 			window.ExportSentinels_entries = Object.entries(ExportSentinels)
 			window.ExportRewards_entries = Object.entries(ExportRewards);
-			window.ExportRegions = ExportRegions;
-			window.ExportEnemies = ExportEnemies;
-			window.ExportTextIcons = ExportTextIcons;
-			window.supplementalGlyphData = supplementalGlyphData;
 
 			window.itemToRecipeMap = {};
 			Object.entries(ExportRecipes).forEach(([uniqueName, recipe]) => {
@@ -190,6 +201,16 @@
 				return (a.type == "tag") - (b.type == "tag");
 			});
 			console.timeEnd("Sort results");
+
+			console.time("Try for direct result");
+			{
+				const direct_result = getResultFromUniqueName(query);
+				if (direct_result)
+				{
+					results.unshift(direct_result);
+				}
+			}
+			console.timeEnd("Try for direct result");
 
 			const tags_shown = {};
 			document.getElementById("results").textContent = results.length == 0 ? "Found 0 results." : "";
@@ -678,6 +699,55 @@
 				res.push(result);
 			}
 			return res;
+		}
+
+		function getResultFromUniqueName(uniqueName)
+		{
+			let entry = ExportWarframes[uniqueName];
+			if (entry)
+			{
+				return { type: "warframe", key: uniqueName, value: entry };
+			}
+			entry = ExportWeapons[uniqueName];
+			if (entry)
+			{
+				return { type: "weapon", key: uniqueName, value: entry };
+			}
+			entry = ExportUpgrades[uniqueName];
+			if (entry)
+			{
+				return { type: "upgrade", key: uniqueName, value: entry };
+			}
+			entry = ExportArcanes[uniqueName];
+			if (entry)
+			{
+				return { type: "arcane", key: uniqueName, value: entry };
+			}
+			entry = ExportResources[uniqueName];
+			if (entry)
+			{
+				return { type: "resource", key: uniqueName, value: entry };
+			}
+			entry = ExportFlavour[uniqueName];
+			if (entry)
+			{
+				return { type: "flavour", key: uniqueName, value: entry };
+			}
+			entry = ExportCustoms[uniqueName];
+			if (entry)
+			{
+				return { type: "custom", key: uniqueName, value: entry };
+			}
+			entry = ExportGear[uniqueName];
+			if (entry)
+			{
+				return { type: "gear", key: uniqueName, value: entry };
+			}
+			entry = ExportSentinels[uniqueName];
+			if (entry)
+			{
+				return { type: "sentinel", key: uniqueName, value: entry };
+			}
 		}
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
