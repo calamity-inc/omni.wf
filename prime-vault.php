@@ -116,28 +116,32 @@
 			{
 				div.innerHTML = "";
 			}
-			let names = [];
+			let named_items = [];
 			for (const [item, state] of Object.entries(items))
 			{
 				const name = dict[ExportWarframes[item]?.name] ?? dict[ExportWeapons[item]?.name] ?? dict[ExportSentinels[item]?.name];
 				if (name)
 				{
-					names.push([ name.split("<ARCHWING>").join("").trim(), state ]);
+					named_items.push({
+						key: item,
+						name: name.split("<ARCHWING>").join("").trim(),
+						state
+					});
 				}
 				else
 				{
 					console.info("discarding", item);
 				}
 			}
-			names = names.sort((a, b) => a[0].localeCompare(b[0]));
-			for (const [name, state] of names)
+			named_items = named_items.sort((a, b) => a.name.localeCompare(b.name));
+			for (const item of named_items)
 			{
 				const li = document.createElement("li");
-				li.textContent = name + " ";
+				li.textContent = item.name + " ";
 				{
 					const a = document.createElement("a");
 					a.textContent = "(Wiki)";
-					a.href = "https://warframe.fandom.com/wiki/" + encodeURIComponent(name);
+					a.href = "https://warframe.fandom.com/wiki/" + encodeURIComponent(item.name);
 					a.target = "_blank";
 					li.appendChild(a);
 				}
@@ -149,11 +153,11 @@
 				{
 					const a = document.createElement("a");
 					a.textContent = "(omni.wf)";
-					a.href = "/#q=" + encodeURIComponent(name);
+					a.href = "/#q=" + encodeURIComponent(item.key);
 					a.target = "_blank";
 					li.appendChild(a);
 				}
-				state_to_elm[state].appendChild(li);
+				state_to_elm[item.state].appendChild(li);
 			}
 		}
 	</script>
