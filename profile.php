@@ -487,6 +487,15 @@
 			};
 		});
 
+		function sanitiseName(name)
+		{
+			if (name.charCodeAt(name.length - 1) >= 0xE000)
+			{
+				name = name.substr(0, name.length - 1);
+			}
+			return name;
+		}
+
 		let lookup_in_progress = false;
 		function doLookup()
 		{
@@ -503,7 +512,7 @@
 				if (data)
 				{
 					window.profile = data;
-					window.hashprefix = "account=" + encodeURIComponent(profile.Results[0].DisplayName) + "&platform=" + profile.platform + "&";
+					window.hashprefix = "account=" + encodeURIComponent(sanitiseName(profile.Results[0].DisplayName)) + "&platform=" + profile.platform + "&";
 					location.hash = hashprefix + "tab=fashion"; // default tab
 				}
 				else
@@ -519,7 +528,7 @@
 		{
 			document.querySelector("#status").classList.add("d-none");
 
-			document.getElementById("profile-name").textContent = profile.Results[0].DisplayName;
+			document.getElementById("profile-name").textContent = sanitiseName(profile.Results[0].DisplayName); // Note: In case the name needs to be sanitised, there is also a "PlatformNames" field. Example user: Voltage
 			document.getElementById("mr").textContent = platformNames[profile.platform] + " Account, Mastery Rank " + (profile.Results[0].PlayerLevel ?? 0);
 
 			const accolades = [];
