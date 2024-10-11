@@ -2085,5 +2085,11 @@
     },
     "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageOttofyre": {
         "promo_code": "OTTOFYRE"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageJustHailey": {
+        "promo_code": "JUSTHAILEY"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageQuadlyStop": {
+        "promo_code": "QUADLYSTOP"
     }
 }
