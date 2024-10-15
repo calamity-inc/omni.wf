@@ -2091,5 +2091,11 @@
     },
     "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageQuadlyStop": {
         "promo_code": "QUADLYSTOP"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/AvatarImageConqueraGlyphVI": {
+        "promo_code": "CONQUERA2024"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/AvatarImageConqueraGlyphVII": {
+        "promo_code": "CONQUERA2024"
     }
 }
