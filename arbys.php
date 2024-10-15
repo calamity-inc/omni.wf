@@ -143,7 +143,7 @@
 
 		function totit(str)
 		{
-			return str.replace(/\S+/g, word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase());
+			return str.replace(/[^\s\-]+/g, word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase());
 		}
 
 		function formattz(offset)
